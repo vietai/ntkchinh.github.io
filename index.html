@@ -1,32 +1,98 @@
----
-layout: index
-title: thtrieu
-sub: grab a coffee, finish the book, build something
----
+<html>
+<meta charset="utf-8">
+<script src="https://distill.pub/template.v1.js"></script>
+<script type="text/front-matter">
+  title: "Article Title"
+  description: "Description of the post"
+  authors:
+  - Chris Olah: http://colah.github.io
+  - Shan Carter: http://shancarter.com
+  affiliations:
+  - Google Brain: http://g.co/brain
+  - Google Brain: http://g.co/brain
+</script>
+<!-- <head>
 
-<section>
-	<ul>
-		{% for post in site.posts %}
+</head>
+<body>
 
-		{% if post.visible != false %}
-		
-		<li>
-			<div class="post-date">
-				<time>{{ post.date | date: "%B %-d, %Y" }}</time>
-			</div>
-			<div class="title">
-				<a href="{{ post.url | prepend: site.baseurl }}"
-				onmouseover = "postLogo()"
-				onmouseout = "thisLogo()"
-				onmouseup = "postClicked()"> {{ post.title }} </a>
-			</div>
-		</li>
+  <div id="chart_div" style="width: 1000px; height: 400px;"></div>
+  
+</body> -->
 
-		{% endif %}
+  <dt-article>
+    <h1>Best Vi-En Machine Translation</h1>
+    <h2>A description of the article</h2>
+    <dt-byline></dt-byline>
 
-		{% endfor %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart", 'bar']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Translate System', 'BLEU', { role: 'style' }],
+          ['This system', 42.06, 'color: #00008B'],
+          ['Google Translate', 37.06, 'color: #0000FF'],
+          ['Transformer+BPE-dropout', 33.27, 'color: #6495ED'],
+          ['Transformer+BPE+FixNorm+ScaleNorm', 32.8, 'color: #7FFFD4'],
+          ['Transformer+BPE+LayerNorm-simple', 31.4, 'color: #00FFFF'],
+          ['CVT', 29.6, 'color: #1E90FF']
+        ]);
+  
+        // var options = {
+        //   title: 'En-Vi Machine Translation',
+        //   legend: { position: 'none' },
+        // };
+        var options = {
+          title: 'En-Vi Machine Translation',
+          trendlines: {
+            0: {type: 'linear', lineWidth: 5, opacity: .3},
+            1: {type: 'exponential', lineWidth: 10, opacity: .3}
+          },
+          chartArea: {width: '50%'},
+          // colors: ['#b0120a', '#ffab91'],
+          hAxis: {
+            title: 'BLEU Score',
+            minValue: 25
+          }
+          // ,
+          // vAxis: {
+          //   title: 'System'
+          // }
+        };
+  
+        // var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        // var chart = new google.visualization.CollumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
 
-	</ul>
-</section>
-<script id="dsq-count-scr" src="//thtrieu.disqus.com/count.js" async></script>
 
+    <p>This is the first paragraph of the article.</p>
+      <!-- <img src = '/Users/ntkchinh/Desktop/demo_img.gif' align='right' style="width: 400px; height: 300px;"/> -->
+      <div id="chart_div" style="width: 400px; height: 300px;"></div>
+
+    <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> <dt-cite key="trieu19backtranslate"></dt-cite> external publications.</p>
+  </dt-article>
+
+  <dt-appendix>
+  </dt-appendix>
+
+  <script type="text/bibliography">
+    @article{gregor2015draw,
+      title={DRAW: A recurrent neural network for image generation},
+      author={Gregor, Karol and Danihelka, Ivo and Graves, Alex and Rezende, Danilo Jimenez and Wierstra, Daan},
+      journal={arXivreprint arXiv:1502.04623},
+      year={2015},
+      url={https://arxiv.org/pdf/1502.04623.pdf}
+    }
+    @article{trieu19backtranslate,
+      author  = {Trieu H. Trinh and Thang Le and Phat Hoang and Minh{-}Thang Luong},
+      title   = {A Tutorial on Data Augmentation by Backtranslation (DAB)},
+      journal = {https://github.com/vietai/dab},
+      year    = {2019},
+    }
+ </script>
+</html>
