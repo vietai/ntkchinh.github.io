@@ -5,78 +5,462 @@
   title: "Article Title"
   description: "Description of the post"
   authors:
-  - Chris Olah: http://colah.github.io
-  - Shan Carter: http://shancarter.com
+  - Trieu Trinh: http://colah.github.io
+  - Chinh Ngo: http://shancarter.com
   affiliations:
-  - Google Brain: http://g.co/brain
-  - Google Brain: http://g.co/brain
+  - VietAI: https://vietai.org/
+  - VietAI: https://vietai.org/
 </script>
-<!-- <head>
 
-</head>
-<body>
+<script src="syncscroll.js"></script>
 
-  <div id="chart_div" style="width: 1000px; height: 400px;"></div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<style type="text/css">
   
-</body> -->
+.tab-content>.tab-pane {
+  height: 1px;
+  overflow: hidden;
+  display: block;
+ visibility: hidden;
+}
+.tab-content>.active {
+  height: auto;
+  overflow: auto;
+  visibility: visible;
+}
+
+</style> 
+
+<style>
+#left {
+  float: left;
+  width: 50%;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 0.5em;
+}
+#right {
+  float: left;
+  width: 50%;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 0.5em;
+}
+pre {
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  word-break: keep-all
+}
+a.button {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px!important;
+  text-decoration: none;
+  color: #aaa;
+  border: none;
+  font-weight: 300;
+  border: solid 1px rgba(0, 0, 0, 0.08);
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+  line-height: 16px;
+}
+colablogo {
+  background-image: url(colab.svg);
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position-y: 2px;
+  display: inline-block;
+  padding-left: 24px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+gcpstoragelogo {
+  background-image: url(gcpstorage.svg);
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position-y: 0px;
+  display: inline-block;
+  padding-left: 24px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+a:hover{
+  color: #666;
+  background: white;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+</style>
+
 
   <dt-article>
     <h1>Best Vi-En Machine Translation</h1>
-    <h2>A description of the article</h2>
+    <h2>We collect data from different resources to train a model for translation English - Vietnamse</h2>
     <dt-byline></dt-byline>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart", 'bar']});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Translate System', 'BLEU', { role: 'style' }],
-          ['This system', 42.06, 'color: #00008B'],
-          ['Google Translate', 37.06, 'color: #0000FF'],
-          ['Transformer+BPE-dropout', 33.27, 'color: #6495ED'],
-          ['Transformer+BPE+FixNorm+ScaleNorm', 32.8, 'color: #7FFFD4'],
-          ['Transformer+BPE+LayerNorm-simple', 31.4, 'color: #00FFFF'],
-          ['CVT', 29.6, 'color: #1E90FF']
-        ]);
-  
-        // var options = {
-        //   title: 'En-Vi Machine Translation',
-        //   legend: { position: 'none' },
-        // };
-        var options = {
-          title: 'En-Vi Machine Translation',
-          trendlines: {
-            0: {type: 'linear', lineWidth: 5, opacity: .3},
-            1: {type: 'exponential', lineWidth: 10, opacity: .3}
-          },
-          chartArea: {width: '50%'},
-          // colors: ['#b0120a', '#ffab91'],
-          hAxis: {
-            title: 'BLEU Score',
-            minValue: 25
+      google.charts.load("current", {
+          packages:["corechart", 'bar'],
+          // this says that google charts will run (i.e. "callback")
+          callback: function() {
+              $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                switch ($(e.target).html()) {
+                  case 'English to Vietnamese':
+                    // this function when the tab is "English to Vietnamese"
+                    drawChartEnvi();
+                    break;
+
+                  case 'Vietnamese to English':
+                    // this function when the tab is "Vietnamese to English"
+                    drawChartVien();
+                    break;
+              }});
+              drawChartEnvi()
           }
-          // ,
-          // vAxis: {
-          //   title: 'System'
-          // }
+      });
+
+      function drawChartEnvi() {
+        var data = google.visualization.arrayToDataTable([
+        ['Test set', 'Google Translate', 'Our model'],
+        ['Movie subtitles', 19.47, 23.83],
+        ['Fictional book', 24.16, 25.82],
+        ['Medical publication', 31.99, 38.44],
+        ['TED Talk (IWSLT2015)', 37.06, 39.39],
+        ['Software', 38.16, 46.85],
+        ['Legal documents', 42.76, 56.59]
+        ]);
+        var options = {
+          // title: 'En to Vi Translation',
+          chartArea: {width: '70%'},
+          legend: { position: "top" },
+          colors: ['#75a3a3',
+                 // '#e085c2'
+                  // '#FF8C00'
+                  '#ff9900'
+                ],
+          hAxis: {
+            // title: 'BLEU Score',
+            bar: {groupWidth: "70%"},
+            ticks: [18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58],
+            minValue: 18,
+            viewWindow: {min: 18}
+          },
+          animation: {
+            "startup": true,
+            "duration": 1000,
+            easing: 'out',
+          }
         };
-  
-        // var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-        // var chart = new google.visualization.CollumnChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
+        var chart_envi = new google.visualization.BarChart(document.getElementById('chart_envi'));
+        chart_envi.draw(data, options);
       }
+
+      function drawChartVien() {               
+        var data = google.visualization.arrayToDataTable([
+            ['Test set', 'Google Translate', 'Our model'],
+            ['Movie subtitles', 20.67, 33.67],
+            ['Fictional book', 24.25, 40.52],
+            ['Medical publication', 25.94, 32.97],
+            ['TED Talk (IWSLT2015)', 28.85, 42.75],
+            ['Software', 34.27, 44.04],
+            ['Legal documents', 30.64, 35.8]
+            ]);
+
+        var options = {
+          // title: 'Vi to En translation',
+          chartArea: {width: '70%'},
+          legend: { position: "top" },
+          colors: [
+                  '#75a3a3',
+                  // '#FF8C00'
+                  '#ff9900'
+            ],
+          hAxis: {
+            bar: {groupWidth: "70%"},
+            ticks: [20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 45],
+            minValue: 20,
+            viewWindow: {
+                    min: 20
+                }
+          },
+          animation: {
+              "startup": true,
+              "duration": 1000,
+              easing: 'out',
+          }
+        };
+
+        var chart_vien = new google.visualization.BarChart(
+            document.getElementById('chart_vien'));
+        chart_vien.draw(data, options);
+      }
+
     </script>
 
+    <script type="text/javascript">
+      google.charts.load("current", {packages:['corechart', 'bar']});  //"corechart",
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data1 = google.visualization.arrayToDataTable([
+        ['Translate from', 'With out Tag', 'With Tag'],
+        ['En-to-Vi', 40.98, 41.21],
+        ['Vi-to-En', 37.91, 38.34],
+        ]);
+        var options1 = {
+          title: 'Tag vs No-tag',
+          bar: {groupWidth: "70%"},
+          legend: { position: "top" },
+          colors: ['#75a3a3',
+                  // '#e085c2'
+                  '#ff9900'
+                ],
+          plotOptions: {
+            series: {fillOpacity: 0.1}
+          },
+          vAxis: {
+            // title: 'BLEU Score',
+            bar: {groupWidth: "80%"},
+            // ticks: [35, 36, 37, 38, 39, 40, 41],
+            // minValue: 35,
+            viewWindow: {
+                min: [35, 41]
+                // ,
+                // max: [40, 45]
+              }
+          },
+          animation: {
+              "startup": true,
+              "duration": 1000,
+              easing: 'up',
+          }
+		  };
+        var chart1 = new google.visualization.ColumnChart(document.getElementById('chart_div1'));
+        chart1.draw(data1, options1);
+    }
+    </script>
 
-    <p>This is the first paragraph of the article.</p>
-      <!-- <img src = '/Users/ntkchinh/Desktop/demo_img.gif' align='right' style="width: 400px; height: 300px;"/> -->
-      <div id="chart_div" style="width: 400px; height: 300px;"></div>
+    
+    <h2>Introduction</h2>
+    <p> We aim to solve the following problems,</p>
+    <dt-byline></dt-byline>
 
-    <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> <dt-cite key="trieu19backtranslate"></dt-cite> external publications.</p>
+    <h2>Results</h2>
+    <p>Compare to Google Translate</p>
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#envi">English to Vietnamese</a></li>
+      <li><a data-toggle="tab" href="#vien">Vietnamese to English</a></li>
+    </ul>
+
+    <div class="tab-content" style="width: 500px; height: 800px;">
+      <div id="envi" class="tab-pane fade in active">
+        <!-- <p></p> -->
+        <div id="chart_envi" style="width: 750px; height: 400px;"></div>
+
+        <a href="https://google.com" class="button">Reproduce in <colablogo>Notebook</colablogo></a>
+
+      </div>
+
+      <div id="vien" class="tab-pane fade">
+        <!-- <p></p> -->
+        <div id="chart_vien" style="width: 750px; height: 400px;"></div>
+
+        <a href="https://google.com" class="button">Reproduce in <colablogo>Notebook</colablogo></a>
+
+      </div>
+
+      <p>Compare between 'with Tag' and 'without Tag'</p>
+      <div id="chart_div1" style="width: 700px; height: 300px;"></div>
+      </br>
+    </div>
+
+    <p>We can also cite <dt-cite class='dont' key="gregor2015draw"></dt-cite>
+      <dt-cite key="trieu19backtranslate"></dt-cite> external publications.
+    </p>
+
+  <h2>Our data</h2>
+
+  <ul class="nav nav-tabs" style="width: 1000px; height: 50px;">
+    <li class="active"><a data-toggle="tab" id="what" href="#ted">TED talks</a></li>
+    <li><a data-toggle="tab" href="#movie">Movie subtitles</a></li>
+    <li class="tab"><a data-toggle="tab" href="#law">Legal documents</a></li>
+    <li class="tab"><a data-toggle="tab" href="#medical">Medical publication</a></li>
+    <li class="tab"><a data-toggle="tab" href="#book">Fictional Book</a></li>
+  </ul>
+
+
+  <div class="tab-content" style="width: 1000px; height: 300px;">
+    <div id="ted" class="tab-pane fade in active">
+      
+      <div id="left" ><pre id='ted-output' style="height: 300px;" class=syncscroll name=myElements>
+      In South Asia, in countries like India and Pakistan, four species of vultures are listed as critically endangered, which means they have less than 10 or 15 years to go extinct, and the reason is because they are falling prey by consuming livestock that has been treated with a painkilling drug like Diclofenac .
+
+      This drug has now been banned for veterinary use in India, and they have taken a stand .
+
+      Because there are no vultures, there's been a spread in the numbers of feral dogs at carcass dump sites, and when you have feral dogs, you have a huge time bomb of rabies. The number of cases of rabies has increased tremendously in India .
+
+      Kenya is going to have one of the largest wind farms in Africa : 353 wind turbines are going to be up at Lake Turkana .
+
+      I am not against wind energy, but we need to work with the governments, because wind turbines do this to birds. They slice them in half .
+        
+      </pre></div>
+        
+      <div id="right"><pre id='ted-output' style="height: 300px;"  class=syncscroll name=myElements>
+      Tại Nam Á, những nước như Ấn Độ và Pakistan, 4 loài kền kền được ghi danh trong danh sách những có nguy cơ cực cao điều này có nghĩa là chúng chỉ còn ít hơn 10 hoặc 15 năm để chạm đến mức tuyệt chủng và lí do đó là bởi vì chúng bị biến thành con mồi vì ăn phải gia súc đã được chữa trị bằng thuốc giảm đau như Diclofenac .
+
+      Thuốc này đã bị cấm sử dụng trong ngành thú y tại Ấn Độ Chúng đã minh chứng rằng
+      
+      Vì không có kền kền nên mới có sự tràn lan về số lượng chó hoang tại những khu vực chứa rác thải xác động vật Khi bạn có chó hoang, bạn có một quả bom hẹn giờ khổng lồ về bệnh dại. Số ca mắc bệnh dại đã tăng rất nhiều tại Ấn Độ .
+      Kenya sẽ có một cánh đồng quạt gió lớn nhất tại Châu Phi với 353 động cơ sẽ được lắp tại Lake Turkana
+
+      Tôi không phản đối năng lượng gió, nhưng chúng ta cần hợp tác với chính phủ, vì động cơ gió khiến những con chim thành thế này. Chúng cắt làm đôi .
+
+      </pre></div>
+    </div>
+    <div id="movie" class="tab-pane fade">
+      
+      <div id="left" ><pre id='movie-output' style="height: 300px;" class=syncscroll name=myElements>
+      Doyle's about halfway through our initial background check. 
+
+      No. We don't insinuate connections we can't back up. 
+      
+      You should be nearby if President Qian wants to get on the phone. 
+      
+      Now this is different than the standoff over the Senkaku Islands. 
+      
+      Well, I'm asking for a small portion of the Seventh Fleet. 
+      
+      Are you supposed to take the Lord's name in vain like that ? 
+      
+      The President can issue an executive order in times of emergency. 
+      
+      There is a heat wave. That always pushes the grid to its limits. 
+      
+      And good luck with that first pitch tonight, Mr. Vice President. 
+      
+      This is about the Secretary of State nomination, isn't it ? 
+        
+      </pre></div>
+
+      <div id="right"><pre id='movie-output' style="height: 300px;"  class=syncscroll name=myElements>
+      Doyle đang tiến hành kiểm tra lý lịch rồi. 
+
+      Chúng ta sẽ không ám chỉ các mối liên hệ mà ta không thể chứng minh được. 
+
+      Anh nên ở đây nếu chủ tịch Qian muốn trao đổi qua điện thoại. 
+
+      Việc này khác với thế tranh chấp ở quần đảo Senkaku. 
+
+      Chúng tôi chỉ yêu cầu một bộ phận nhỏ của Hạm đội 7. 
+
+      Cô định xăm tên chúa lên tay thế này à ? 
+
+      Tổng thống có thể ban hành sắc lệnh trong trường hợp khẩn cấp. 
+
+      Nhiệt độ quá cao, hệ thống chịu đựng quá giới hạn rồi. 
+
+      Và chúc may mắn với cú ném tối nay, ngài phó tổng thống. 
+
+      Liên quan đến việc đề cử chức bộ trưởng Bộ ngoại giao, phải không ? 
+      
+      </pre></div>
+    </div>
+    <div id="law" class="tab-pane fade">
+      
+      <div id="left" ><pre id='law-output' style="height: 300px;" class=syncscroll name=myElements>
+      On the 20th of October 1994, the Government signed Decree No.177-CP promulgating the Statute on the Management of Investment and Construction (Statute on the Management of Investment and Construction 177-CP for short) as a substitute for the Statute on Capital Construction issued together with Decree No.385-HDBT on the 7th of November 1990 (Statute on Capital Construction 385-HDBT for short), and the Statute on the Drawing Up, Examination and Approval of the Designs of Construction Projects issued together with Decree No.237-HDBT on the 19th of September 1985 of the Council of Ministers.  
+
+      In execution of Article 3 of the Decree, and Article 59 of the Statute on the Management of Investment and Construction 177-CP, the Ministry of Construction, the State Planning Committee and the Ministry of Finance hereunder guide the implementation of some main issues (outside the guidance on separate issues for the concerned ministries):  
+
+      + With regard to the investment projects under State ownership, besides the management of the same aspects as in the investment projects of the non- State economic sector, the State shall also manage the commercial and financial aspects, and the economic efficiency of the project.  
+
+      The State-owned investment projects comprise all the projects of which the investor (or his representative) is appointed by the competent authorities of the State, to manage the whole or part of the investment capital of the project raised from whatever source.  
+
+      + The following investment projects shall come under separate guidance of the Ministries in charge of the branches after reaching agreement with the Ministry of Construction, the State Planning Committee and the Ministry of Finance: 
+        
+        </pre></div>
+
+      <div id="right"><pre id='law-output' style="height: 300px;"  class=syncscroll name=myElements>
+      Ngày 20/10/1994 Chính phủ đã ký Nghị định số 177/CP ban hành Điều lệ Quản lý đầu tư và xây dựng (gọi tắt là "điều lệ quản lý đầu tư và xây dựng 177/CP") thay thế Điều lệ quản lý xây dựng cơ bản ban hành kèm theo Nghị định số 385/HĐBT (gọi tắt là "Điều lệ quản lý XDCB 385/HĐBT) ngày 7/11/1990 và Điều lệ lập, thẩm tra, xét duyệt thiết kế các công trình xây dựng ban hành kèm theo Nghị định số 237/HĐBT ngày 19/9/1985 của Hội đồng Bộ trưởng. 
+
+      Thực hiện Điều 3 của Nghị định và Điều 59 của Điều lệ Quản lý đầu tư và xây dựng 177/CP, liên Bộ (Bộ Xây dựng, Uỷ ban Kế hoạch Nhà nước, Bộ Tài chính) hướng dẫn chung một số vấn đề chủ yếu (ngoài những nội dung hướng dẫn riêng từng lĩnh vực của các bộ có liên quan) như sau:  
+
+      - Đối với các dự án đâu tư thuộc sở hữu Nhà nước ngoài việc quản lý các mặt như đối với các dự án đầu tư của các thành phần kinh tế ngoài quốc doanh, Nhà nước còn quản lý về các khía cạnh thương mại, tài chính và hiệu quả kinh tế của dự án.
+
+      Các dự án đầu tư thuộc sở hữu Nhà nước bao gồm tất cả các dự án mà chủ đầu tư (hoặc đại diện chủ đầu tư) do các cấp có thẩm quyền của Nhà nước cử ra hoặc thuê để quản lý toàn bộ hoặc một phần vốn đầu tư của dự án bất kể nguồn vốn đó được huy động từ đâu.  
+      
+      - Đối với các dự án đầu tư sâu đây sẽ có hướng dẫn riêng của Bộ quản lý ngành sau khi có sự thoả thuận của Liên Bộ Xây dựng - Uỷ ban Kế hoạch Nhà nước - Bộ Tài chính.  
+      
+      </pre></div>
+    </div>
+    <div id="medical" class="tab-pane fade" w3-include-html="medical_sync.html">
+
+      <div id="left" ><pre id='medical-output' style="height: 300px;" class=syncscroll name=myElements>
+      Surveying a number of factors on wound infection and the use of prophylactic antibiotics in surgical laparoscopic cholecystectomy.
+
+      Hypertension is a risk factor for cardiovascular disease in industrialized countries as well as in our country, a cause of death among 12 leading causes of death in the elderly.
+
+      Studying the combination of CEA and CA 19 - 9 levels with histopathological characteristics as well as monitoring recurrence and metastasis in patients with colorectal cancer.
+
+      The meaning of introduce cut - off value of value plays an role as pilot study for the other relate study and brings the NT - ProBNP closely approach to clinical application.
+
+      HPV DNA testing and HPV vaccines are milestones in the new era of primary, secondary and even tertiary prevention of cervical cancer.
+
+      </pre></div>
+
+      <div id="right"><pre id='medical-output' style="height: 300px;"  class=syncscroll name=myElements>
+      Khảo sát một số yếu tố về việc sử dụng kháng sinh dự phòng và nhiễm trùng vết mổ trong phẫu thuật nội soi cắt túi mật.
+
+      Tăng huyết áp là một yếu tố nguy cơ cao đối với bệnh tim mạch ở các nước công nghiệp cũng như ở nước ta, đứng hàng đầu trong số 12 nguyên nhân gây tử vong ở người cao tuổi.
+
+      Nghiên cứu mối liên quan kết hợp nồng độ CEA và CA 19 - 9 với các đặc điểm giải phẫu bệnh cũng như theo dõi tái phát và di căn ở bệnh nhân ung thư đại trực tràng.
+
+      Việc đưa ra những điểm cắt tham khảo trong các bệnh lý tim mạch khác có ý nghĩa định hướng các nghiên cứu tiếp theo và đưa giá trị nồng độ NT - ProBNP vào thực tế lâm sàng nghiều hơn.
+
+      Xét nghiệm ADN HPV và vaccin HPV mở ra một kỷ nguyên mới trong dự phòng sơ cấp, thứ cấp và cả tam cấp ung thư cổ tử cung.
+
+      </pre></div>
+
+    </div>
+    <div id="book" class="tab-pane fade">
+      
+      <div id="left" ><pre id='book-output' style="height: 300px;" class=syncscroll name=myElements>
+      I wish I could have gone alone, Mary thought. I don't need him or anyone else to keep me out of trouble .
+
+      The Romanian embassy looked completely different from the last time Mary had seen it. There was a festive air about it that had been totally missing on her first visit. They were greeted at the door by Gabriel Stoica, the deputy chief of mission .
+
+      There was no flicker of recognition on Stoica's face .
+
+      As they walked down the hallway, Mary noticed that all the rooms were brightly lighted and well heated. From upstairs she could hear the strains of a small orchestra. There were vases of flowers everywhere .
+      
+      Ambassador Corbescue was talking to a group of people when he saw James Stickley and Mary Ashley approach .
+      
+      </pre></div>
+
+      <div id="right"><pre id='book-output' style="height: 300px;"  class=syncscroll name=myElements>
+      - Mình ước gì được đi một mình, - Mary nghĩ thế. - Mình không cần ông ta hoặc ai khác để mình khỏi phiền phức .
+
+      Toà đại sứ Rumani trông hoàn toàn khác hẳn lần trước như Mary đã trông thấy. Có một bầu không khí tiệc tùng đã thiếu vắng trong chuyến đi thăm lần trước của nàng. Họ được Gabriel Stoica, phó trưởng phái bộ tiếp đón ở cửa .
+
+      Chẳng có dấu hiệu nào tỏ vẻ nhận ra nàng trên nét mặt của Stoica .
+
+      Trong khi họ bước xuống hành lang, Mary nhận thấy tất cả các phòng đều sáng rực và thật ấm áp. Từ trên lầu nàng có thể nghe những giai điệu của một ban nhạc nhỏ. Khắp nơi đều có các chậu hoa .
+
+      Đại sứ Corbescue đang nói chuyện với một nhóm người khi ông ta trông thấy James Stickley và Mary Ashley đến gần .
+        
+      </pre></div>
+    </div>
+
+    <a href="https://google.com" class="button">Download from <gcpstoragelogo>Storage</gcpstoragelogo></a>
+  </div>
+
   </dt-article>
-
   <dt-appendix>
   </dt-appendix>
 
