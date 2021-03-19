@@ -576,16 +576,21 @@ Tôi yêu bạn, harry
 
   <div><a href="https://colab.research.google.com/drive/1BOqSEeNhF8azwDWsNzHBA1_aZvVPpA5g?usp=sharing" class="button">Try more in <colablogo>Notebook</colablogo></a></div>
   
-
-  <div style="height: 50px;"></div>
-  <p style="text-align: justify;">Throughout this project,
-    We make use of the code infrastructure of vietai/dab github repository.
-    <dt-cite key="trieu19backtranslate"></dt-cite>, 
-    and VietAI computational resources.
-  </p>
-
+  <div style='height: 50px;'></div>
+  <h2>Software</h2>
+  <p>We make extensive use of vietai/dab <dt-cite key="trieu19backtranslate"></dt-cite>, 
+  tensorflow<dt-cite key="tensorflow2015-whitepaper"></dt-cite>, and tensor2tensor<dt-cite key="tensor2tensor"></dt-cite> 
+  throughout this project to train deep neural networks.
+  Web scraping is done mainly using the python packages Selenium Webdriver 
+  and BeautifulSoup.</p>
+  
   </dt-article>
   <dt-appendix>
+  <h3>Acknowledgement</h3>
+  <p>Throughout this project, we make use of the code infrastructure
+  from vietai/dab, computing resources provided by VietAI through Google Colab Pro,
+  and premium storage from VietAI's Research Cloud Storage.<p>
+  <p>Special thanks to invaluable guidance from VietAI advisors Thang Luong, Thu Nguyen, and Phat Hoang.<p>
   </dt-appendix>
 
   <script type="text/bibliography">
@@ -595,5 +600,63 @@ Tôi yêu bạn, harry
       journal = {https://github.com/vietai/dab},
       year    = {2019},
     }
+    @misc{tensorflow2015-whitepaper,
+      title={TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems},
+      url={http://tensorflow.org/},
+      note={Software available from tensorflow.org},
+      author={
+          Mart\'{\i}n~Abadi and
+          Ashish~Agarwal and
+          Paul~Barham and
+          Eugene~Brevdo and
+          Zhifeng~Chen and
+          Craig~Citro and
+          Greg~S.~Corrado and
+          Andy~Davis and
+          Jeffrey~Dean and
+          Matthieu~Devin and
+          Sanjay~Ghemawat and
+          Ian~Goodfellow and
+          Andrew~Harp and
+          Geoffrey~Irving and
+          Michael~Isard and
+          Yangqing Jia and
+          Rafal~Jozefowicz and
+          Lukasz~Kaiser and
+          Manjunath~Kudlur and
+          Josh~Levenberg and
+          Dan~Man\'{e} and
+          Rajat~Monga and
+          Sherry~Moore and
+          Derek~Murray and
+          Chris~Olah and
+          Mike~Schuster and
+          Jonathon~Shlens and
+          Benoit~Steiner and
+          Ilya~Sutskever and
+          Kunal~Talwar and
+          Paul~Tucker and
+          Vincent~Vanhoucke and
+          Vijay~Vasudevan and
+          Fernanda~Vi\'{e}gas and
+          Oriol~Vinyals and
+          Pete~Warden and
+          Martin~Wattenberg and
+          Martin~Wicke and
+          Yuan~Yu and
+          Xiaoqiang~Zheng},
+        year={2015},
+      }
+      @article{tensor2tensor,
+        author    = {Ashish Vaswani and Samy Bengio and Eugene Brevdo and
+          Francois Chollet and Aidan N. Gomez and Stephan Gouws and Llion Jones and
+          \L{}ukasz Kaiser and Nal Kalchbrenner and Niki Parmar and Ryan Sepassi and
+          Noam Shazeer and Jakob Uszkoreit},
+        title     = {Tensor2Tensor for Neural Machine Translation},
+        journal   = {CoRR},
+        volume    = {abs/1803.07416},
+        year      = {2018},
+        url       = {http://arxiv.org/abs/1803.07416},
+      }
  </script>
 </html>
