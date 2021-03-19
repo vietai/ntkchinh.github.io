@@ -2,8 +2,8 @@
 <meta charset="utf-8">
 <script src="distill.template.v1.js"></script>
 <script type="text/front-matter">
-  title: "Article Title"
-  description: "Description of the post"
+  title: "Better translation for Vietnamese"
+  description: "How we collected more data and trained a state-of-the-art Neural Machine Translation model for Vietnamese."
   authors:
   - Chinh Ngo: http://github.com/ntkchinh/
   - Trieu Trinh: http://github.com/thtrieu/
@@ -35,6 +35,13 @@
 </style> 
 
 <style>
+code {
+  font-family: Consolas,"courier new";
+  color: rgb(37, 35, 35);
+  background-color: #f1f1f1;
+  padding: 2px;
+  font-size: 100%;
+}
 #left {
   float: left;
   width: 50%;
@@ -108,14 +115,12 @@ a:hover{
 }
 </style>
 
-
   <dt-article>
     <h1>Better translation for Vietnamese</h1>
-    <h2>How we collected more data and trained a state-of-the-art Neural Machine Translation model.</h2>
+    <h2>How we collected more data and trained a state-of-the-art Neural Machine Translation model for Vietnamese.</h2>
     <dt-byline></dt-byline>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
     <script type="text/javascript">
       google.charts.load("current", {
           packages:["corechart", 'bar'],
@@ -298,7 +303,7 @@ a:hover{
       while conditioning its output on specific language styles. 
       We released the resulting models and training data here:
     </p>
-    <a href="http://github.com/ntkchinh/" class="button">Get the code at <githublogo>repository</githublogo></a>
+    <a href="http://github.com/ntkchinh/dab" class="button">Get the code at <githublogo>repository</githublogo></a>
     <a href="https://console.cloud.google.com/storage/browser/best_vi_translation;tab=objects?project=vietai-research&prefix=&forceOnObjectsSortingFiltering=false" class="button">Download data from <gcpstoragelogo>Storage</gcpstoragelogo></a>
   </div>
 
@@ -577,18 +582,22 @@ Tôi yêu bạn, harry
   <div><a href="https://colab.research.google.com/drive/1BOqSEeNhF8azwDWsNzHBA1_aZvVPpA5g?usp=sharing" class="button">Try more in <colablogo>Notebook</colablogo></a></div>
   
   <div style='height: 50px;'></div>
-  <h2>Software</h2>
-  <p>We make extensive use of vietai/dab <dt-cite key="trieu19backtranslate"></dt-cite>, 
-  tensorflow<dt-cite key="tensorflow2015-whitepaper"></dt-cite>, and tensor2tensor<dt-cite key="tensor2tensor"></dt-cite> 
-  throughout this project to train deep neural networks.
-  Web scraping is done mainly using the python packages Selenium Webdriver 
-  and BeautifulSoup.</p>
+  <h2>Technical details</h2>
+  <p style="text-align: justify;">The deep learning model we used is Transformer <dt-cite key="vaswani2017attention"></dt-cite>, with setting <code>transformer_base</code>. 
+  The model is trained on 3.3M training examples with 1M training steps of batch size 32.</p>
+  <p style="text-align: justify;">We reuse extensively the code infrastructure from <code>vietai/dab</code> <dt-cite key="trieu19backtranslate"></dt-cite>
+  for training and inference on Google Cloud resources.
+  The core libraries are <code>tensor2tensor</code><dt-cite key="tensor2tensor"></dt-cite>, and <code>tensorflow</code><dt-cite key="tensorflow2015-whitepaper"></dt-cite>.
+  Web scraping is done using the python packages <code>Selenium Webdriver</code> 
+  and <code>BeautifulSoup4</code>.</p>
   
   </dt-article>
   <dt-appendix>
   <h3>Acknowledgement</h3>
-  <p>Cloud computing resources are generously provided by VietAI.
-    Special thanks to invaluable guidance from VietAI advisors Thang Luong, Thu Nguyen, and Phat Hoang.<p>
+  <p>Cloud computing resources are generously provided by VietAI (vietai.org).
+    Special thanks to invaluable guidances from VietAI advisors Thang Luong, Thu Nguyen, and Phat Hoang.
+  </p>
+  <p>This article template is a fork of Distill.pub</p>
   </dt-appendix>
 
   <script type="text/bibliography">
@@ -656,5 +665,11 @@ Tôi yêu bạn, harry
         year      = {2018},
         url       = {http://arxiv.org/abs/1803.07416},
       }
+      @article{vaswani2017attention,
+        title={Attention is all you need},
+        author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, Lukasz and Polosukhin, Illia},
+        journal={arXiv preprint arXiv:1706.03762},
+        year={2017}
+      }       
  </script>
 </html>
