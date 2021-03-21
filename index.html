@@ -509,7 +509,7 @@ BLEU score - a standard auto-metric in Machine Translation research.
   However, auto-metric based alignment produces lower quality data than our carefully
   hand-curated collection. 
   On our test set, training on MultiCCAligned gives much lower BLEU score,
-  while incorporating MultiCCAligned into our own data degrades its performance slightly.
+  while incorporating MultiCCAligned into our own data slightly degrades its performance.
   </p>
 
 
@@ -524,7 +524,7 @@ BLEU score - a standard auto-metric in Machine Translation research.
       ['English to Vietnamese', 32.98, 40.70, 40.97],
       ['Vietnamese to English', 27.37, 37.21, 37.91],
       // tst 2013
-      // ['English to Vietnamese', 32.98, 35.67, 39.39],
+      // ['English to Vietnamese', 32.44, 35.67, 39.39],
       // ['Vietnamese to English', 29.26, 36.80, 42.75],
       ]);
       var options1 = {
@@ -663,7 +663,7 @@ Tôi yêu bạn, harry
 <p style="text-align: justify;">The deep learning model we used is Transformer <dt-cite key="vaswani2017attention"></dt-cite>, with setting <code>transformer_base</code>. 
 The model is trained on 3.3M training examples with 1M training steps of batch size 32.</p>
 
-<p style="text-align: justify;">We reuse extensively the code infrastructure from <code>vietai/dab</code> <dt-cite key="trieu19backtranslate"></dt-cite>
+<p style="text-align: justify;">We make extensive use of the code infrastructure from <code>vietai/dab</code> <dt-cite key="trieu19backtranslate"></dt-cite>
   for training and inference on Google Cloud resources.
   The core libraries are <code>tensor2tensor</code><dt-cite key="tensor2tensor"></dt-cite>, and <code>tensorflow</code><dt-cite key="abadi2016tensorflow"></dt-cite>.
 </p>
