@@ -508,7 +508,7 @@ BLEU score - a standard auto-metric in Machine Translation research.
   nearly three times the size of our own data.
   However, auto-metric based alignment produces lower quality data than our carefully
   hand-curated collection: training on MultiCCAligned gives much lower BLEU score,
-  while incorporating MultiCCAligned into our own data slightly degrades its performance.
+  while incorporating MultiCCAligned into our own data slightly degrades our result.
   </p>
 
 
@@ -595,7 +595,7 @@ BLEU score - a standard auto-metric in Machine Translation research.
 </p>
 
 
-<ul class="nav nav-tabs" style="">
+<ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" id="what" href="#generic">Generic</a></li>
   <li><a data-toggle="tab" href="#movie1">Movie</a></li>
   <li class="tab"><a data-toggle="tab" href="#ted1">TED talks</a></li>
@@ -658,18 +658,81 @@ Tôi yêu bạn, harry
 <div style='height: 50px;'></div>
 <h2>More details</h2>
 
-<h3> Modeling and training </h3>
-<p style="text-align: justify;">The deep learning model we used is Transformer <dt-cite key="vaswani2017attention"></dt-cite>, with setting <code>transformer_base</code>. 
-The model is trained on 3.3M training examples with 1M training steps of batch size 32.</p>
+<div><p style='height: 10px;'><b> Modeling and training </b></p></div>
+<p style="text-align: justify;">
+We augmented the training dataset using two techniques. First, we concatenate 
+adjacent sentences up to a specified maximum length. Second, we add style information
+to the training example in the following manner:
+</p> 
 
-<p style="text-align: justify;">We make extensive use of the code infrastructure from <code>vietai/dab</code> <dt-cite key="trieu19backtranslate"></dt-cite>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" id="what" href="#original">Original</a></li>
+  <li><a data-toggle="tab" href="#augmented">Augmented</a></li>
+</ul>
+  
+
+<div class="tab-content" style="height: 120px;">
+  <div id="original" class="tab-pane fade in active">
+    <div id="left" >
+      <pre id='ted-output' style="height: 100px;" class=syncscroll name=style1>
+I love you, harry
+    </pre></div>
+    <div id="right">
+      <pre id='ted-output' style="height: 100px;"  class=syncscroll name=style1>
+Tôi yêu cô, harry
+    </pre></div>
+  </div>
+  <div id="augmented" class="tab-pane fade">
+    <div id="left" >
+      <pre id='ted-output' style="height: 100px;" class=syncscroll name=style2>
+I love you, harry
+I love you, harry \ movie
+I love you, harry
+    </pre></div>
+    <div id="right">
+      <pre id='ted-output' style="height: 100px;"  class=syncscroll name=style2>
+Tôi yêu cô, harry
+Tôi yêu cô, harry
+Tôi yêu cô, harry \ phim
+    </pre></div>
+  </div>
+</div>
+
+<p style="text-align: justify;">
+  These two data augmentation multiplied our
+  dataset of size 3.3M to roughly 25M pairs.</p>
+
+<p style="text-align: justify;">
+  The deep learning model we used is Transformer 
+  <dt-cite key="vaswani2017attention"></dt-cite>, with setting <code>transformer_base</code>. 
+  The model is trained with 1M training steps of batch size 32.
+  We make extensive use of the code infrastructure from <code>vietai/dab</code> <dt-cite key="trieu19backtranslate"></dt-cite>
   for training and inference on Google Cloud resources.
   The core libraries are <code>tensor2tensor</code><dt-cite key="tensor2tensor"></dt-cite>, and <code>tensorflow</code><dt-cite key="abadi2016tensorflow"></dt-cite>.
 </p>
-<h3> Bitext mining</h3>
-<p>Web scraping is done using the python packages <code>Selenium Webdriver</code> 
-  and <code>BeautifulSoup4</code>. For most of our use cases</p>
 
+<div><p style='height: 10px;'><b> Data collection </b></p></div>
+
+<p style="text-align:justify"> Roughly half of our data was obtained from
+  the Open Parallel Corpus collection<dt-cite key="TIEDEMANN12.463"></dt-cite>
+  <dt-cite key="schwenk2019wikimatrix"></dt-cite>
+  <dt-cite key="reimers-2020-multilingual-sentence-bert"></dt-cite>
+  <dt-cite key="christodouloupoulos2015massively"></dt-cite>
+  <dt-cite key="lison2016opensubtitles2016"></dt-cite>. 
+  We perform simple processing on this collection by removing duplicates,
+  filtering test data, and re-balancing the number of training examples from
+  each language style.
+  The second half was collected by scraping from multiples sources 
+  on the Internet using the python packages <code>Selenium Webdriver</code> 
+  and <code>BeautifulSoup4</code>. This mostly results in weakly aligned texts, 
+  for example, pairs of books or pairs of multi-page Law/Medical 
+  documents. To break this down to sentence/paragraph level alignment, 
+  we make use of a 
+  <a href="https://github.com/ntkchinh/dab/blob/master/dp_algorithm.md"
+   target="_blank" rel="noopener noreferrer">
+    simple Dynamic Programming algorithm</a>.
+  </p>
 
 
 </dt-article>
@@ -718,5 +781,66 @@ The model is trained on 3.3M training examples with 1M training steps of batch s
         journal={arXiv preprint arXiv:1911.06154},
         year={2019}
       }
+      @inproceedings{tiedemann-2012-parallel,
+        title = "Parallel Data, Tools and Interfaces in {OPUS}",
+        author = {Tiedemann, J{\"o}rg},
+        booktitle = "Proceedings of the Eighth International Conference on Language Resources and Evaluation ({LREC}'12)",
+        month = may,
+        year = "2012",
+        address = "Istanbul, Turkey",
+        publisher = "European Language Resources Association (ELRA)",
+        url = "http://www.lrec-conf.org/proceedings/lrec2012/pdf/463_Paper.pdf",
+        pages = "2214--2218",
+        abstract = "This paper presents the current status of OPUS, a growing language resource of parallel corpora and related tools. 
+                    The focus in OPUS is to provide freely available data sets in various formats together with basic annotation to be 
+                    useful for applications in computational linguistics, translation studies and cross-linguistic corpus studies. 
+                    In this paper, we report about new data sets and their features, additional annotation tools and models provided 
+                    from the website and essential interfaces and on-line services included in the project.",
+    }
+    
+    @article{schwenk2019wikimatrix,
+      title={Wikimatrix: Mining 135m parallel sentences in 1620 language pairs from wikipedia},
+      author={Schwenk, Holger and Chaudhary, Vishrav and Sun, Shuo and Gong, Hongyu and Guzm{\'a}n, Francisco},
+      journal={arXiv preprint arXiv:1907.05791},
+      year={2019}
+    }
+    @inproceedings{reimers-2020-multilingual-sentence-bert,
+      title = "Making Monolingual Sentence Embeddings Multilingual using Knowledge Distillation",
+      author = "Reimers, Nils and Gurevych, Iryna",
+      booktitle = "Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing",
+      month = "11",
+      year = "2020",
+      publisher = "Association for Computational Linguistics",
+      url = "https://arxiv.org/abs/2004.09813",
+  }
+  @InProceedings{TIEDEMANN12.463,
+    author = {Jörg Tiedemann},
+    title = {Parallel Data, Tools and Interfaces in OPUS},
+    booktitle = {Proceedings of the Eight International Conference on Language Resources and Evaluation (LREC'12)},
+    year = {2012},
+    month = {may},
+    date = {23-25},
+    address = {Istanbul, Turkey},
+    editor = {Nicoletta Calzolari (Conference Chair) and Khalid Choukri and Thierry Declerck and Mehmet Ugur Dogan and Bente Maegaard and Joseph Mariani and Jan Odijk and Stelios Piperidis},
+    publisher = {European Language Resources Association (ELRA)},
+    isbn = {978-2-9517408-7-7},
+    language = {english}
+   }
+   @article{christodouloupoulos2015massively,
+    title={A massively parallel corpus: the bible in 100 languages},
+    author={Christodouloupoulos, Christos and Steedman, Mark},
+    journal={Language resources and evaluation},
+    volume={49},
+    number={2},
+    pages={375--395},
+    year={2015},
+    publisher={Springer}
+  }
+  @article{lison2016opensubtitles2016,
+    title={Opensubtitles2016: Extracting large parallel corpora from movie and tv subtitles},
+    author={Lison, Pierre and Tiedemann, J{\"o}rg},
+    year={2016},
+    publisher={European Language Resources Association}
+  }
  </script>
 </html>
