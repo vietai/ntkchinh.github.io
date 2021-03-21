@@ -221,8 +221,8 @@ a:hover{
     function drawChart() {
       var data1 = google.visualization.arrayToDataTable([
       ['Translate from', 'Generic', 'Style-conditioned'],
-      ['En-to-Vi', 40.97, 41.21],
-      ['Vi-to-En', 37.91, 38.34],
+      ['English to Vietnamese', 40.97, 41.21],
+      ['Vietnamese to English', 37.91, 38.34],
       ]);
       var options1 = {
         bar: {groupWidth: "70%"},
@@ -251,7 +251,7 @@ a:hover{
             easing: 'out',
         }
     };
-      var chart1 = new google.visualization.ColumnChart(document.getElementById('chart_div1'));
+      var chart1 = new google.visualization.ColumnChart(document.getElementById('chart_taguntag'));
       chart1.draw(data1, options1);
   }
   </script>
@@ -495,11 +495,81 @@ BLEU score - a standard auto-metric in Machine Translation research.
 
   <div style="height: 50px;"> </div>
 
+  <h2> Quality of training data </h2>
+
+  <p style="text-align:justify"> MultiCCAligned <dt-cite key="el2019ccaligned"></dt-cite> aims to solve
+    the same problem as we do, by massively crawling the Web and
+    aligning bilingual texts using the auto-metric of embedding-based document similarity.
+  This results in 9.3M English-Vietnamese text pairs - 
+  the largest collection available to the public at the moment
+  <dt-fn>MultiCCAligned paper reported 12.4M pairs, we detected and removed duplicates,
+    which accounted for nearly one quarter of their released data.
+  </dt-fn>, 
+  nearly three times the size of our own data.
+  However, auto-metric based alignment produces lower quality data than our carefully
+  hand-curated collection. 
+  On our test set, training on MultiCCAligned gives much lower BLEU score,
+  while incorporating MultiCCAligned into our own data degrades its performance slightly.
+  </p>
+
+
+  <script type="text/javascript">
+    google.charts.load("current", {packages:['corechart', 'bar']});  //"corechart",
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data1 = google.visualization.arrayToDataTable([
+      ['Train on', 'MultiCCAligned', 'MultiCCAligned + Ours', 'Ours'],
+      // ['English to Vietnamese', 32.54, 40.24, 40.97],
+      // ['Vietnamese to English', 27.29, 36.79, 37.91],
+      ['English to Vietnamese', 32.98, 40.70, 40.97],
+      ['Vietnamese to English', 27.37, 37.21, 37.91],
+      // tst 2013
+      // ['English to Vietnamese', 32.98, 35.67, 39.39],
+      // ['Vietnamese to English', 29.26, 36.80, 42.75],
+      ]);
+      var options1 = {
+        bar: {groupWidth: "70%"},
+        legend: { position: "top" },
+        colors: ['#75a3a3',
+                '#c1c1c1',
+                '#ff9900'
+              ],
+        plotOptions: {
+          series: {fillOpacity: 0.1}
+        },
+        vAxis: {
+          // title: 'Comparing BLEU score between different training datasets',
+          bar: {groupWidth: "80%"},
+          ticks: [25, 29, 33, 37, 41],
+          // minValue: 35,
+          viewWindow: {
+              min: 25
+              // ,
+              // max: [40, 45]
+            }
+        },
+        animation: {
+            "startup": true,
+            "duration": 1000,
+            easing: 'out',
+        }
+    };
+      var chart1 = new google.visualization.ColumnChart(document.getElementById('chart_quality'));
+      chart1.draw(data1, options1);
+  }
+  </script>
+
+  <div>
+    <div id="chart_quality" style="height: 300px;"></div>
+  </div>
+
+  <div style="height: 50px;"> </div>
+
   <h2> Training with language style conditioning </h2>
   
   <p style="text-align:justify">
     Machine Translation models are trained on many pairs of parallel sentences,
-    and improve as more training data included. 
+    and generally improve as more training data included. 
     Their translation, however, usually converges towards a generic style. This is because of 
     a lack in context and a lack in user control to the model output. The first problem
     can be solved by simply inputting a larger chunk of text to translate. 
@@ -509,8 +579,7 @@ BLEU score - a standard auto-metric in Machine Translation research.
   </p>
 
   <div>
-    <div id="chart_div1" style="height: 300px;"></div>
-    </br>
+    <div id="chart_taguntag" style="height: 300px;"></div>
     <a href="https://colab.research.google.com/drive/1ISOSve7KrStffohgnjiLFs0cWEYqz9Tc?usp=sharing" class="button" target="_blank" rel="noopener noreferrer">Reproduce in <colablogo>Notebook</colablogo></a>
   </div>
       
@@ -588,14 +657,21 @@ Tôi yêu bạn, harry
 <div><a href="https://colab.research.google.com/drive/1BOqSEeNhF8azwDWsNzHBA1_aZvVPpA5g?usp=sharing" class="button" target="_blank" rel="noopener noreferrer">Try more in <colablogo>Notebook</colablogo></a></div>
 
 <div style='height: 50px;'></div>
-<h2>Technical details</h2>
+<h2>More details</h2>
+
+<h3> Modeling and training </h3>
 <p style="text-align: justify;">The deep learning model we used is Transformer <dt-cite key="vaswani2017attention"></dt-cite>, with setting <code>transformer_base</code>. 
 The model is trained on 3.3M training examples with 1M training steps of batch size 32.</p>
+
 <p style="text-align: justify;">We reuse extensively the code infrastructure from <code>vietai/dab</code> <dt-cite key="trieu19backtranslate"></dt-cite>
-for training and inference on Google Cloud resources.
-The core libraries are <code>tensor2tensor</code><dt-cite key="tensor2tensor"></dt-cite>, and <code>tensorflow</code><dt-cite key="tensorflow2015-whitepaper"></dt-cite>.
-Web scraping is done using the python packages <code>Selenium Webdriver</code> 
-and <code>BeautifulSoup4</code>.</p>
+  for training and inference on Google Cloud resources.
+  The core libraries are <code>tensor2tensor</code><dt-cite key="tensor2tensor"></dt-cite>, and <code>tensorflow</code><dt-cite key="abadi2016tensorflow"></dt-cite>.
+</p>
+<h3> Bitext mining</h3>
+<p>Web scraping is done using the python packages <code>Selenium Webdriver</code> 
+  and <code>BeautifulSoup4</code>. For most of our use cases</p>
+
+
 
 </dt-article>
   <dt-appendix>
@@ -613,53 +689,13 @@ and <code>BeautifulSoup4</code>.</p>
       journal = {https://github.com/vietai/dab},
       year    = {2019},
     }
-    @misc{tensorflow2015-whitepaper,
-      title={TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems},
-      url={http://tensorflow.org/},
-      note={Software available from tensorflow.org},
-      author={
-          Mart\'{\i}n~Abadi and
-          Ashish~Agarwal and
-          Paul~Barham and
-          Eugene~Brevdo and
-          Zhifeng~Chen and
-          Craig~Citro and
-          Greg~S.~Corrado and
-          Andy~Davis and
-          Jeffrey~Dean and
-          Matthieu~Devin and
-          Sanjay~Ghemawat and
-          Ian~Goodfellow and
-          Andrew~Harp and
-          Geoffrey~Irving and
-          Michael~Isard and
-          Yangqing Jia and
-          Rafal~Jozefowicz and
-          Lukasz~Kaiser and
-          Manjunath~Kudlur and
-          Josh~Levenberg and
-          Dan~Man\'{e} and
-          Rajat~Monga and
-          Sherry~Moore and
-          Derek~Murray and
-          Chris~Olah and
-          Mike~Schuster and
-          Jonathon~Shlens and
-          Benoit~Steiner and
-          Ilya~Sutskever and
-          Kunal~Talwar and
-          Paul~Tucker and
-          Vincent~Vanhoucke and
-          Vijay~Vasudevan and
-          Fernanda~Vi\'{e}gas and
-          Oriol~Vinyals and
-          Pete~Warden and
-          Martin~Wattenberg and
-          Martin~Wicke and
-          Yuan~Yu and
-          Xiaoqiang~Zheng},
-        year={2015},
-      }
+    @inproceedings{abadi2016tensorflow,
+      title={Tensorflow: A system for large-scale machine learning},
+      author={Abadi, Mart{\'\i}n and Barham, Paul and Chen, Jianmin and Chen, Zhifeng and Davis, Andy and Dean, Jeffrey and Devin, Matthieu and Ghemawat, Sanjay and Irving, Geoffrey and Isard, Michael and others},
+      booktitle={12th $\{$USENIX$\}$ symposium on operating systems design and implementation ($\{$OSDI$\}$ 16)},
+      pages={265--283},
+      year={2016}
+    }
       @article{tensor2tensor,
         author    = {Ashish Vaswani and Samy Bengio and Eugene Brevdo and
           Francois Chollet and Aidan N. Gomez and Stephan Gouws and Llion Jones and
@@ -676,6 +712,12 @@ and <code>BeautifulSoup4</code>.</p>
         author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, Lukasz and Polosukhin, Illia},
         journal={arXiv preprint arXiv:1706.03762},
         year={2017}
-      }       
+      }
+      @article{el2019ccaligned,
+        title={CCAligned: A massive collection of cross-lingual web-document pairs},
+        author={El-Kishky, Ahmed and Chaudhary, Vishrav and Guzman, Francisco and Koehn, Philipp},
+        journal={arXiv preprint arXiv:1911.06154},
+        year={2019}
+      }
  </script>
 </html>
