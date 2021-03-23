@@ -568,7 +568,7 @@ BLEU score - a standard auto-metric in Machine Translation research.
   
   <p style="text-align:justify">
     Machine Translation models are trained on many pairs of parallel sentences,
-    and generally improve as more training data included. 
+    and generally improve as more training data is included. 
     Their translation, however, usually converges towards a generic style. This is because of 
     a lack in context and a lack in user control to the model output. The first problem
     can be solved by simply inputting a larger chunk of text to translate. 
@@ -700,7 +700,7 @@ Tôi yêu cô, harry \ phim
 </div>
 
 <p style="text-align: justify;">
-  These two data augmentation multiplied our
+  These two data augmentations multiplied our
   dataset of size 3.3M to roughly 25M pairs.</p>
 
 <p style="text-align: justify;">
@@ -715,11 +715,7 @@ Tôi yêu cô, harry \ phim
 <div><p style='height: 10px;'><b> Data collection </b></p></div>
 
 <p style="text-align:justify"> Roughly half of our data was obtained from
-  the Open Parallel Corpus collection<dt-cite key="TIEDEMANN12.463"></dt-cite>
-  <dt-cite key="schwenk2019wikimatrix"></dt-cite>
-  <dt-cite key="reimers-2020-multilingual-sentence-bert"></dt-cite>
-  <dt-cite key="christodouloupoulos2015massively"></dt-cite>
-  <dt-cite key="lison2016opensubtitles2016"></dt-cite>. 
+  the Open Parallel Corpus collection<dt-cite key="TIEDEMANN12.463,schwenk2019wikimatrix,reimers-2020-multilingual-sentence-bert,christodouloupoulos2015massively,lison2016opensubtitles2016"></dt-cite>. 
   We perform simple processing on this collection by removing duplicates,
   filtering test data, and re-balancing the number of training examples from
   each language style.
@@ -737,13 +733,12 @@ Tôi yêu cô, harry \ phim
 
   <h2>Refer to this work: </h2>
   <div><pre id='Bibtex' style="height: 150px;" class=syncscroll name=BibTex>
-    @article{StyledAugmentedTranslation,
-      author  = {Ngo T.K. Chinh and Trieu H. Trinh},
-      title   = {Styled Augmented Translation (SAT)},
-      journal = {https://github.com/vietai/SAT},
-      year    = {2021},
-    }
-    
+@article{sat2021ngo,
+  author  = {Chinh Ngo and Trieu H. Trinh},
+  title   = {Styled Augmented Translation (SAT)},
+  journal = {https://github.com/vietai/SAT},
+  year    = {2021},
+}
     </pre></div>
   
 </dt-article>
