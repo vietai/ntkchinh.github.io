@@ -504,10 +504,11 @@ BLEU score - a standard auto-metric in Machine Translation research.
   the largest collection available to the public at the moment
   <dt-fn>MultiCCAligned paper reported 12.4M pairs, we detected and removed duplicates,
     which accounted for nearly one quarter of their released data.
-  </dt-fn>, 
-  nearly three times the size of our own data.
-  However, auto-metric based alignment produces lower quality data than our carefully
-  hand-curated collection: training on MultiCCAligned gives much lower BLEU score,
+  </dt-fn>.
+  However, auto-metric based alignment produces lower-quality data than our carefully
+  hand-curated collection, many pairs in MultiCCAligned are themselves
+  machine translated.
+  Training on MultiCCAligned gives much lower BLEU score,
   while incorporating MultiCCAligned into our own data slightly degrades our result.
   </p>
 
@@ -635,24 +636,6 @@ Tôi yêu bạn, harry
   </div>
 </div>
 
-  <!-- <div id="left" ><pre id='law-output' style="height: 130px;">
-  I love you, harry
-
-  I love you, harry \ movie
-
-  I love you, harry \ TED talk     
-  </pre></div>
-
-  <div id="right"><pre id='law-output' style="height: 130px;">
-  Em yêu anh, harry
-
-  Tôi yêu cô, harry
-
-  Tôi yêu bạn, harry
-  </pre></div> -->
-  
-<!-- </div> -->
-
 <div><a href="https://colab.research.google.com/drive/1BOqSEeNhF8azwDWsNzHBA1_aZvVPpA5g?usp=sharing" class="button" target="_blank" rel="noopener noreferrer">Try more in <colablogo>Notebook</colablogo></a></div>
 
 <div style='height: 50px;'></div>
@@ -743,7 +726,6 @@ Tôi yêu cô, harry \ phim
       journal = {https://github.com/vietai/SAT},
       year    = {2021},
     }
-    
     </pre></div>
   
 </dt-article>
