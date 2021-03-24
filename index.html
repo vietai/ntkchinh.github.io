@@ -497,16 +497,16 @@ BLEU score - a standard auto-metric in Machine Translation research.
 
   <h2> Quality of training data </h2>
 
-  <p style="text-align:justify"> MultiCCAligned <dt-cite key="el2019ccaligned"></dt-cite> aims to solve
-    the same problem as we do, by massively crawling the Web and
-    aligning bilingual texts using the auto-metric of embedding-based document similarity.
+  <p style="text-align:justify"> MultiCCAligned <dt-cite key="el2019ccaligned"></dt-cite> 
+    massively crawled the Web and
+    aligned bilingual texts using the auto-metric of embedding-based document similarity.
   This results in 9.3M English-Vietnamese text pairs - 
   the largest collection available to the public at the moment
   <dt-fn>MultiCCAligned paper reported 12.4M pairs, we detected and removed duplicates,
     which accounted for nearly one quarter of their released data.
   </dt-fn>.
-  However, auto-metric based alignment produces lower-quality data than our carefully
-  hand-curated collection, many pairs in MultiCCAligned are themselves
+  However, auto-metric based alignment produces data of lower quality than our carefully
+  hand curated collection, many pairs in MultiCCAligned are themselves
   machine translated.
   Training on MultiCCAligned gives much lower BLEU score,
   while incorporating MultiCCAligned into our own data slightly degrades our result.
