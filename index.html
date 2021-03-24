@@ -504,10 +504,11 @@ BLEU score - a standard auto-metric in Machine Translation research.
   the largest collection available to the public at the moment
   <dt-fn>MultiCCAligned paper reported 12.4M pairs, we detected and removed duplicates,
     which accounted for nearly one quarter of their released data.
-  </dt-fn>, 
-  nearly three times the size of our own data.
-  However, auto-metric based alignment produces lower quality data than our carefully
-  hand-curated collection: training on MultiCCAligned gives much lower BLEU score,
+  </dt-fn>.
+  However, auto-metric based alignment produces lower-quality data than our carefully
+  hand-curated collection, many pairs in MultiCCAligned are themselves
+  machine translated.
+  Training on MultiCCAligned gives much lower BLEU score,
   while incorporating MultiCCAligned into our own data slightly degrades our result.
   </p>
 
@@ -804,12 +805,21 @@ Tôi yêu cô, harry \ phim
 
   <h2>Refer to this work: </h2>
   <div><pre id='Bibtex' style="height: 150px;" class=syncscroll name=BibTex>
+<<<<<<< HEAD
+    @article{StyledAugmentedTranslation,
+      author  = {Ngo T.K. Chinh and Trieu H. Trinh},
+      title   = {Styled Augmented Translation (SAT)},
+      journal = {https://github.com/vietai/SAT},
+      year    = {2021},
+    }
+=======
 @article{sat2021ngo,
   author  = {Chinh Ngo and Trieu H. Trinh},
   title   = {Styled Augmented Translation (SAT)},
   journal = {https://github.com/vietai/SAT},
   year    = {2021},
 }
+>>>>>>> f5d3708ed9747742727f27096bebf1a57c06395d
     </pre></div>
   
 </dt-article>
