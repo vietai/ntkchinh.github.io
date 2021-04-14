@@ -1,6 +1,7 @@
 <html>
 <meta charset="utf-8">
 <script src="distill.template.v1.js"></script>
+
 <script type="text/front-matter">
   title: "Better translation for Vietnamese"
   description: "Collect high quality data and train a state-of-the-art Neural Machine Translation model for Vietnamese."
@@ -104,19 +105,108 @@ githublogo {
   border-radius: 4px;
   text-decoration: none;
 }
+aiplatformlogo {
+  background-image: url(aiplatform.png);
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position-y: -1px;
+  background-position-x: 2px;
+  display: inline-block;
+  padding-left: 24px;
+  border-radius: 4px;
+  text-decoration: none;
+}
 a:hover{
   color: #666;
   background: white;
   border-color: rgba(0, 0, 0, 0.2);
 }
+
+.legend_div {
+  text-align: center;
+  width: 320px;}
+
+.legend-marker {
+  display: inline-block;
+  padding: 16px 4px 8px 4px;
+}
+
+.legend-marker-color {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+}
+img {
+  display: inline-block;
+  align-items: center;
+  padding: 5px; /* Some padding */
+  width: 720px; /* Set a small width */
+  height: 400px;
+  -webkit-filter: grayscale(60%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(40%);
+}
+
+/* Add a hover effect (blue shadow) */
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  /* -webkit-transform: scaleX(-1);
+  transform: scaleX(-1); */
+
+}
+.inset-border {
+  outline: 5px solid rgba(25, 163, 36, 0.5);
+  outline-offset: -5px;
+}
 </style>
 
 <dt-article>
+  <div target="_blank" >
+    <img class='insert-border' src="Translation-image-01.png" alt="">
+  </div>
+
   <h1>Better translation for Vietnamese</h1>
   <h2>Collect high quality data and train a state-of-the-art Neural Machine Translation model for Vietnamese.</h2>
   <dt-byline></dt-byline>
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <!-- chart quality  -->
+  <script type="text/javascript">
+    google.charts.load("current", {packages:['corechart', 'bar']});  //"corechart",
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data1 = google.visualization.arrayToDataTable([
+      ['Train on', 'MultiCCAligned', 'MultiCCAligned + Ours', 'Ours'],
+      ['English to Vietnamese', 32.98, 40.70, 40.97],
+      ['Vietnamese to English', 27.37, 37.21, 37.91],
+      ]);
+      var options1 = {
+        bar: {groupWidth: "70%"},
+        legend: { position: "top" },
+        colors: ['#75a3a3',
+                '#c1c1c1',
+                '#ff9900'
+              ],
+        plotOptions: {
+          series: {fillOpacity: 0.1}
+        },
+        vAxis: {
+          bar: {groupWidth: "80%"},
+          ticks: [25, 29, 33, 37, 41],
+          viewWindow: {
+              min: 25
+            }
+        },
+        animation: {
+            "startup": true,
+            "duration": 1000,
+            easing: 'out',
+        }
+    };
+      var chart1 = new google.visualization.ColumnChart(document.getElementById('chart_quality'));
+      chart1.draw(data1, options1);
+  }
+  </script>
+  <!-- chart envi-vien  -->
   <script type="text/javascript">
     google.charts.load("current", {
         packages:["corechart", 'bar'],
@@ -141,28 +231,23 @@ a:hover{
     function drawChartEnvi() {
       var data = google.visualization.arrayToDataTable([
       ['Test set', 'Google Translate', 'Our model'],
-      ['Movie subtitles', 19.47, 23.83],
-      ['Fictional book', 24.16, 25.82],
-      ['Medical publication', 31.99, 38.44],
-      ['TED Talk (IWSLT2015)', 37.06, 39.39],
-      ['Software', 38.16, 46.85],
-      ['Legal documents', 42.76, 56.59]
+      ['Movie subtitles', 22.19, 25.37],
+      ['Fictional book', 27.04, 26.7],
+      ['Medical publication', 42.68, 41.43],
+      ['TED Talk (IWSLT2015)', 37.02, 37.84],
+      ['Legal documents', 61.5, 61.71]
       ]);
       var options = {
-        // title: 'En to Vi Translation',
         chartArea: {width: '70%'},
         legend: { position: "top" },
         colors: ['#75a3a3',
-                // '#e085c2'
-                // '#FF8C00'
                 '#ff9900'
               ],
         hAxis: {
-          // title: 'BLEU Score',
           bar: {groupWidth: "70%"},
-          ticks: [18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58],
-          minValue: 18,
-          viewWindow: {min: 18}
+          ticks: [20, 25, 30, 35, 40, 45, 50, 55, 60, 65],
+          minValue: 20,
+          viewWindow: {min: 20}
         },
         animation: {
           "startup": true,
@@ -177,26 +262,24 @@ a:hover{
     function drawChartVien() {               
       var data = google.visualization.arrayToDataTable([
           ['Test set', 'Google Translate', 'Model của chúng tôi'],
-          ['Phụ đề phim', 20.67, 33.67],
-          ['Sách truyện', 24.25, 40.52],
-          ['Ấn phẩm y học', 25.94, 32.97],
-          ['Thuyết trình TED talk', 28.85, 42.75],
-          ['Phần mềm', 34.27, 44.04],
-          ['Văn bản luật', 30.64, 35.8]
+          ['Phụ đề phim', 24.62, 34.39],
+          ['Sách truyện', 32.13, 41.94],
+          ['Ấn phẩm y học', 33.3, 35.72],
+          ['Thuyết trình TED talk', 36.57, 40.64],
+          ['Văn bản luật', 36.75, 39.9]
           ]);
 
       var options = {
-        // title: 'Vi to En translation',
         chartArea: {width: '70%'},
         legend: { position: "top" },
         colors: [
                 '#75a3a3',
-                // '#FF8C00'
                 '#ff9900'
           ],
         hAxis: {
           bar: {groupWidth: "70%"},
-          ticks: [20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 45],
+          ticks: [20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42],
+          // ticks: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
           minValue: 20,
           viewWindow: {
                   min: 20
@@ -215,106 +298,245 @@ a:hover{
     }
 
   </script>
+  <!-- Chart style training/translation + Chart totaltest compare 2 gg  -->
   <script type="text/javascript">
     google.charts.load("current", {packages:['corechart', 'bar']});  //"corechart",
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
       var data1 = google.visualization.arrayToDataTable([
-      ['Translate from', 'Generic', 'Style-conditioned'],
-      ['English to Vietnamese', 40.97, 41.21],
-      ['Vietnamese to English', 37.91, 38.34],
+      ['Translate from', 'Styled Training', 
+                         'Not Styled Training'],
+      ['English to Vietnamese', 42.37, 42.28],
+      ['Vietnamese to English', 39.97, 38.88],
+      
       ]);
       var options1 = {
-        bar: {groupWidth: "70%"},
+        ticks: [38.5, 39, 39.5, 40, 40.5, 41, 41.5, 42, 42.5],
         legend: { position: "top" },
-        colors: ['#75a3a3',
-                // '#e085c2'
+        colors: [
+                '#c1c1c1',
                 '#ff9900'
               ],
         plotOptions: {
           series: {fillOpacity: 0.1}
         },
         vAxis: {
-          // title: 'BLEU Score',
           bar: {groupWidth: "80%"},
-          // ticks: [35, 36, 37, 38, 39, 40, 41],
-          // minValue: 35,
           viewWindow: {
-              min: [35, 41]
-              // ,
-              // max: [40, 45]
+              min: [35, 41],
+              max: [43]
             }
         },
+        seriesType: 'bars',
+        series: {5: {type: 'line'}},
         animation: {
             "startup": true,
             "duration": 1000,
             easing: 'out',
         }
     };
-      var chart1 = new google.visualization.ColumnChart(document.getElementById('chart_taguntag'));
-      chart1.draw(data1, options1);
+      
+      var data2 = google.visualization.arrayToDataTable([
+        ['Translate from', 'Without style tag', 'With style tag'],
+        ['English to Vietnamese', 42.54, 42.63],
+        ['Vietnamese to English', 39.81, 40.27],
+        ]);
+      var options2 = {
+        ticks: [40, 40.5, 41, 41.5, 42],
+        legend: { position: "top" },
+        colors: ['#75a3a3',
+                '#c1c1c1',
+              ],
+        plotOptions: {
+          series: {fillOpacity: 0.1}
+        },
+        vAxis: {
+          bar: {groupWidth: "80%"},
+          viewWindow: {
+              min: 39
+            }
+        },
+        seriesType: 'bars',
+        series: {5: {type: 'line'}},
+        animation: {
+            "startup": true,
+            "duration": 1000,
+            easing: 'out',
+        }
+      };
+      var data3 = google.visualization.arrayToDataTable([
+      ['Translate from', 'Google Translate', 'Our Model'],
+      ['English to Vietnamese', 41.78, 43.07],
+      ['Vietnamese to English', 34.33, 39.33],
+      
+      ]);
+      var options3 = {
+        bar: {groupWidth: "70%"},
+        ticks: [30, 32, 34, 36, 38, 40, 42, 44],
+        legend: { position: "top" },
+        colors: [
+                '#c1c1c1',
+                '#ff9900'
+              ],
+        plotOptions: {
+          series: {fillOpacity: 0.1}
+        },
+        vAxis: {
+          bar: {groupWidth: "80%"},
+          viewWindow: {
+              min: 30}
+        },
+        seriesType: 'bars',
+        series: {5: {type: 'line'}},
+        animation: {
+            "startup": true,
+            "duration": 1000,
+            easing: 'out'}
+        };
+      
+      // var chart1 = new google.visualization.ColumnChart(document.getElementById('chart_training_taguntag'));
+      // chart1.draw(data1, options1);
+      var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_translation_taguntag'));
+      chart2.draw(data2, options2);
+      var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_compare2GG_total'));
+      chart3.draw(data3, options3);
   }
   </script>
 
-
 <p></p>
-<p style="text-align:justify">Our model consistently outperforms Google Translate on six different domains.
-The following charts showed the two system's quantitative evaluation using
-BLEU score - a standard auto-metric in Machine Translation research.
+<p style="text-align:justify">Our model outperforms Google Translate on a diverse set of text sources,
+including the standard benchmark used in Machine Translation research. 
+The following chart shows the two systems' overall 
+performance in BLEU score - a standard auto-metric in Machine Translation.
 </p>
+
+<div id="chart_compare2GG_total" style="height: 300px;"></div>
+<div style="height: 20px;"> </div>
+
+<p> Below, we highlighted a few translations produced by our model , 
+  contrasting them against the outputs from Google Translate <dt-fn>
+  Google Translate outputs are subjected to change on a daily basis.
+  The outputs reported here are recorded on April 9th, 2021.
+</dt-fn>.</p>
 <ul class="nav nav-tabs">
-<li class="active"><a data-toggle="tab" href="#envi">English to Vietnamese</a></li>
-<li><a data-toggle="tab" href="#vien">Vietnamese to English</a></li>
+  <li class="active"><a data-toggle="tab" href="#envi">English to Vietnamese</a></li>
+  <li><a data-toggle="tab" href="#vien">Vietnamese to English</a></li>
 </ul>
 
-<div class="tab-content" style="height: 400px;">
-<div id="envi" class="tab-pane fade in active">
-  <!-- <p></p> -->
-  <div id="chart_envi" style="height: 400px;"></div>
+<div class="tab-content" style="height: 420px;">
+  <div id="envi" class="tab-pane fade in active"><pre id='ted-output' style="height: 420px;" class=syncscroll name=sampleted>
+<b>Input:</b>
+Edward chose his words carefully. "It is a great honor, honey, and I'm sure it's not one they would offer lightly. They must have had good reason for choosing you." He hesitated. "We have to think about this very carefully. About what it would do to our lives."
 
-  <a href="https://colab.research.google.com/drive/1ISOSve7KrStffohgnjiLFs0cWEYqz9Tc?usp=sharing" 
-      class="button" target="_blank" rel="noopener noreferrer">
-    Reproduce in <colablogo>Notebook</colablogo></a>
+<b>Google Translate:</b>
+Edward lựa chọn lời nói của mình một cách cẩn thận. "Đó là một vinh dự lớn, <b>em yêu</b>, và <b>anh</b> chắc chắn đó không phải là một vinh dự mà họ sẽ đưa ra một cách nhẹ nhàng. Họ phải có lý do chính đáng để chọn <b>bạn</b>." Anh ngập ngừng. "<b>Chúng tôi</b> phải suy nghĩ về điều này rất cẩn thận. Về những gì nó sẽ làm cho cuộc sống của <b>chúng tôi</b>."
 
-</div>
+<b>Our model:</b>
+Edward cẩn thận lựa chọn từ ngữ của mình. "Đó là một vinh dự lớn lao, <b>con yêu</b>, và <b>bố</b> chắc chắn rằng đó không phải là thứ mà họ sẽ đề nghị một cách nhẹ nhàng. Họ hẳn phải có lý do chính đáng để chọn <b>con</b>." Anh ngập ngừng. "<b>Chúng ta</b> phải suy nghĩ thật cẩn thận về điều này. Về những gì nó sẽ làm với cuộc sống của <b>chúng ta</b>."
 
-<div id="vien" class="tab-pane fade">
-  <div id="chart_vien" style="height: 400px;">
+------------
+<b>Input:</b>
+2. To consider and approve business co - operation, joint venture and build - operate - transfer contracts, to permit foreign organizations and individuals to establish enterprises with one hundred (100) per cent foreign owned capital and to approve the charters of enterprises with foreign owned capital.
+
+<b>Google Translate:</b>
+2. Xem xét, chấp thuận các hợp đồng hợp tác kinh doanh, liên doanh, xây dựng - kinh doanh - chuyển giao, cho phép tổ chức, cá nhân nước ngoài thành lập doanh nghiệp 100% vốn nước ngoài và chấp thuận Điều lệ doanh nghiệp có vốn đầu tư nước ngoài<b>. vốn sở hữu.</b>
+
+<b>Our model:</b>
+2. Xem xét, phê duyệt hợp đồng hợp tác kinh doanh, liên doanh, liên kết, hợp đồng xây dựng - kinh doanh - chuyển giao, cho phép tổ chức, cá nhân nước ngoài thành lập doanh nghiệp 100% vốn nước ngoài và phê duyệt điều lệ của doanh nghiệp có vốn đầu tư nước ngoài.
+
+------------
+<b>Input:</b>
+You can't go on conducting your own investigations, Frank.
+
+<b>Google Translate:</b>
+Anh không thể tiến hành cuộc điều tra của riêng mình, Frank.
+
+<b>Our model:</b>
+Anh không thể tự mình điều tra được đâu, Frank.
+
+------------
+<b>Input:</b>
+So that's what's behind Beth's crazy diet !
+
+<b>Google Translate:</b>
+Vì vậy, đó là những gì đằng sau chế độ ăn kiêng điên cuồng của Beth !
+
+<b>Our model:</b>
+Vậy đó là cái đằng sau chế độ ăn uống điên rồ của Beth !
+
+  </pre></div>
   
-  </div>
+  <div id="vien" class="tab-pane fade"><pre id='ted-output' style="height: 420px;" class=syncscroll name=sampleted>
+<b>Input:</b>
+Điều duy nhất thật sự làm em phiền là em có cảm giác rằng <b>em và con</b> có lẽ sẽ chẳng còn bao giờ trở về đây nữa. Em có cảm giác hình như em bỏ trốn anh. Nhưng <b>anh sẽ cùng em</b> trên mọi bước đường em đi. Bây giờ em cần đến anh hơn bao giờ hết.
 
-  <a href="https://colab.research.google.com/drive/1ISOSve7KrStffohgnjiLFs0cWEYqz9Tc?usp=sharing" 
-      class="button" target="_blank" rel="noopener noreferrer">
-    Reproduce in <colablogo>Notebook</colablogo></a>
+<b>Google Translate:</b>
+The only thing that really bothers me is that I have the feeling that <b>I and I</b> probably will never be back here again. I feel like I'm running away from you. But <b>I will be with you</b> every step of the way. Now I need you more than ever.
 
+<b>Our model:</b>
+The only thing that really bothers me is that I have a feeling that <b>I and my child</b> might never come back here again. I feel like I'm running away from you. But <b>you'll be with me</b> on every step I take. I need you now more than ever.
+
+------------
+<b>Input:</b>
+Nhưng thật nản lòng là với bệnh Parkinson và các chứng rối loạn vận động khác, chúng không có dấu ấn sinh học, vì vậy không có phương pháp xét nghiệm máu đơn giản nào mà bạn có thể làm, <b>và cái tốt nhất mà chúng ta có là bài kiểm tra thần kinh này.</b>
+
+<b>Google Translate:</b>
+But frustratingly is that with Parkinson's disease and other motor disorders, they don't have biomarkers, so there's no simple blood test you can do, <b>and the best of us. There is this nerve test.</b>
+
+<b>Our model:</b>
+But what's discouraged is that with Parkinson's disease and other motor disorders, they have no biomarkers, so there's no simple blood test that you can do, <b>and the best thing we have is this neurological test.</b> 
+
+------------
+<b>Input:</b>
+Trung bình mỗi nhánh xuống cho 8,9 + - 0,2 nhánh cơ và trung bình có 3,1 + - 0,3 nhánh xuyên trên 01 tiêu bản đùi. Số nhánh nuôi cơ rộng ngoài là nhiều nhất 7,9 + - 0,4 nhánh.
+
+<b>Google Translate:</b>
+On average, each branch down for <b>8,9 + - 0,2</b> muscle arms and on average has <b>3,1 + - 0,3</b> arms across 01 thigh template. The number of branches for external muscle is at most <b>7,9 + - 0,4</b> branches.
+
+<b>Our model:</b>
+On average, each branch downwards to <b>8.9 + - 0.2</b> muscle branches and on average there are <b>3.1 + - 0.3</b> penetrating branches per thigh specimen. The number of extended muscle rearing branches is at most <b>7.9 + - 0.4</b>.
+    
+------------
+<b>Input:</b>
+2.2.1. Tác giả không đồng thời là chủ sở hữu tác phẩm kiến trúc có các <b>quyền nhân thân</b> không được chuyển giao cho người khác, bao gồm:
+
+<b>Google Translate:</b>
+2.2.1. An author who is not concurrently the owner of an architectural work has <b>moral rights not transferred</b> to others, including:
+
+<b>Our model:</b>
+2.2.1. Authors who are not concurrently owners of architectural works and have <b>personal rights not to be transferred</b> to other persons, including:
+    
+  </pre></div>
 </div>
-</div>
+  
+<div style="height: 20px;"> </div>
 
-<div style="height: 50px;"> </div>
-
-  <div>
+<!-- </center> -->
+<div>
   <h2>Introduction</h2>
   <p style="text-align:justify">
     In this work, we aim to solve two problems at the heart of
-    Vietnamese Translation: first - poor translation quality due to <b>limited training data</b>,
+    Vietnamese Translation: first <b>limited training data</b>,
     and second - generic translation output due to a <b>lack in user interface with the model</b>. 
     We solved them by simply collecting more data, and training our model
     while conditioning its output on specific language styles. 
-    We released the resulting models and training data here:
+    We released the resulting models, code, and training data here:
   </p>
+  <center>
   <a href="https://github.com/vietai/SAT" class="button" target="_blank" rel="noopener noreferrer">Get the code at <githublogo>repository</githublogo></a>
-  <a href="https://console.cloud.google.com/storage/browser/vietai_public/best_vi_translation" class="button" target="_blank" rel="noopener noreferrer">Download data from <gcpstoragelogo>Storage</gcpstoragelogo></a>
+  <a href="https://console.cloud.google.com/storage/browser/vietai_public/best_vi_translation" class="button" target="_blank" rel="noopener noreferrer">Download data from <gcpstoragelogo>Storage</gcpstoragelogo></a></center>
 </div>
-
-  <!-- <dt-byline></dt-byline> -->
 
 <div style="height: 10px;"> </div>
 
   <h2> Collecting more data</h2>
   
   <p style="text-align:justify">We collect data from open sources on the Internet, 
-    and classify them into six different categories, each with a 
-    specific language style. In total, there are 3.3 million
+    and classify them into different categories, each labeled with a 
+    specific language style
+    <dt-fn>
+      See all categories and their respective data sizes at <a target="_blank" rel="noopener noreferrer">https://github.com/vietai/SAT</a>
+    </dt-fn>. In total, there are 3.3 million
     pairs of English and Vietnamese texts, ranging from single sentences to paragraphs. 
     Inspect a sample of our test data here:
   </p>
@@ -336,7 +558,7 @@ BLEU score - a standard auto-metric in Machine Translation research.
 
       Because there are no vultures, there's been a spread in the numbers of feral dogs at carcass dump sites, and when you have feral dogs, you have a huge time bomb of rabies. The number of cases of rabies has increased tremendously in India .
 
-      Kenya is going to have one of the largest wind farms in Africa : 353 wind turbines are going to be up at Lake Turkana .
+      Kenya is going to have one of the largest wind farms in Africa: 353 wind turbines are going to be up at Lake Turkana .
 
       I am not against wind energy, but we need to work with the governments, because wind turbines do this to birds. They slice them in half .
         
@@ -489,25 +711,53 @@ BLEU score - a standard auto-metric in Machine Translation research.
         
       </pre></div>
     </div>
-
-    <a href="https://console.cloud.google.com/storage/browser/vietai_public/best_vi_translation" class="button" target="_blank" rel="noopener noreferrer">Download data from <gcpstoragelogo>Storage</gcpstoragelogo></a>
+    <center>
+    <a href="https://console.cloud.google.com/storage/browser/vietai_public/best_vi_translation" class="button" target="_blank" rel="noopener noreferrer">Download data from <gcpstoragelogo>Storage</gcpstoragelogo></a></center>
   </div>
 
-  <div style="height: 50px;"> </div>
+  <div style="height: 60px;"></div>
+  <p style="text-align: justify;">Below is a detailed breakdown of BLEU scores on five 
+    different test sets that we held out, each with a different style 
+    of writing. For English to Vietnamese translation, our model approximates 
+    or exceeds Google Translate quality. For Vietnamese to English, 
+    the model noticably outperforms Google Translate. 
+    Please note that such result can be explained by the fact that our test data 
+    is splitted from the same source of training data, 
+    while Google Translate is trained on a different corpus that is very likely 
+    many times larger.
+  </p>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#en2vi">English to Vietnamese</a></li>
+    <li><a data-toggle="tab" href="#vi2en">Vietnamese to English</a></li>
+  </ul>
+  <!-- chart envi-vien 6 class -->
+  <div class="tab-content" style="height: 400px;">
+  <div id="en2vi" class="tab-pane fade in active">
+    <div id="chart_envi" style="height: 400px; width: 650px"></div>
+  
+  </div>
+  
+  <div id="vi2en" class="tab-pane fade">
+    <div id="chart_vien" style="height: 400px; width: 650px"></div>
+  
+  </div>
+  </div>
+  
+  <div style="height: 30px;"> </div>
 
   <h2> Quality of training data </h2>
 
   <p style="text-align:justify"> MultiCCAligned <dt-cite key="el2019ccaligned"></dt-cite> 
-    massively crawled the Web and
-    aligned bilingual texts using the auto-metric of embedding-based document similarity.
+  massively crawled the Web and
+  aligned bilingual texts using the auto-metric of embedding-based document similarity.
   This results in 9.3M English-Vietnamese text pairs - 
   the largest collection available to the public at the moment
-  <dt-fn>MultiCCAligned paper reported 12.4M pairs, we detected and removed duplicates,
+  <dt-fn>The MultiCCAligned paper reported 12.4M pairs, we detected and removed duplicates,
     which accounted for nearly one quarter of their released data.
   </dt-fn>.
   However, auto-metric based alignment produces data of lower quality than our carefully
-  hand curated collection, many pairs in MultiCCAligned are themselves
-  machine translated.
+  hand curated collection, many pairs in MultiCCAligned <b>are themselves low-quality
+  machine translated</b>.
   Training on MultiCCAligned, therefore, gives much lower BLEU score,
   while incorporating MultiCCAligned into our own data slightly degrades our result.
   </p>
@@ -519,13 +769,8 @@ BLEU score - a standard auto-metric in Machine Translation research.
     function drawChart() {
       var data1 = google.visualization.arrayToDataTable([
       ['Train on', 'MultiCCAligned', 'MultiCCAligned + Ours', 'Ours'],
-      // ['English to Vietnamese', 32.54, 40.24, 40.97],
-      // ['Vietnamese to English', 27.29, 36.79, 37.91],
-      ['English to Vietnamese', 32.98, 40.70, 40.97],
-      ['Vietnamese to English', 27.37, 37.21, 37.91],
-      // tst 2013
-      // ['English to Vietnamese', 32.44, 35.67, 39.39],
-      // ['Vietnamese to English', 29.26, 36.80, 42.75],
+      ['English to Vietnamese', 32.98, 40.70, 43.07],
+      ['Vietnamese to English', 27.37, 37.21, 39.33],
       ]);
       var options1 = {
         bar: {groupWidth: "70%"},
@@ -538,14 +783,10 @@ BLEU score - a standard auto-metric in Machine Translation research.
           series: {fillOpacity: 0.1}
         },
         vAxis: {
-          // title: 'Comparing BLEU score between different training datasets',
           bar: {groupWidth: "80%"},
           ticks: [25, 29, 33, 37, 41],
-          // minValue: 35,
           viewWindow: {
               min: 25
-              // ,
-              // max: [40, 45]
             }
         },
         animation: {
@@ -563,82 +804,113 @@ BLEU score - a standard auto-metric in Machine Translation research.
     <div id="chart_quality" style="height: 300px;"></div>
   </div>
 
-  <div style="height: 50px;"> </div>
-
-  <h2> Training with language style conditioning </h2>
-  
-  <p style="text-align:justify">
-    Machine Translation models are trained on many pairs of parallel sentences,
-    and generally improve as more training data is included. 
-    Their translation, however, usually converges towards a generic style. This is because of 
-    a lack in context and a lack in user control to the model output. The first problem
-    can be solved by simply inputting a larger chunk of text to translate. 
-    To solve for the second problem,
-    we trained the models while attaching the information of language styles to each example.
-    This results in a further boost in performance in both directions of translation:
-  </p>
-
-  <div>
-    <div id="chart_taguntag" style="height: 300px;"></div>
-    <a href="https://colab.research.google.com/drive/1ISOSve7KrStffohgnjiLFs0cWEYqz9Tc?usp=sharing" class="button" target="_blank" rel="noopener noreferrer">Reproduce in <colablogo>Notebook</colablogo></a>
-  </div>
-      
-
-  <div style="height: 20px;"></div>
+  <div style="height: 30px;"> </div>
 
 
 <h2>Stylizing the Translation</h2>
-<p style="text-align:justify">On the Movie Subtitle test set, 
-  we observe an increase of nearly +2.0 points in BLEU score after attaching the style information. 
-  To stylize a translation, simply append the style name after the input.
+<p style="text-align:justify">
+  Machine Translation models are trained on many pairs of parallel sentences,
+  and generally improve as more training data is included. 
+  Their translation, however, usually converges towards a <b>generic style</b>. This is because of 
+  a lack in context and a lack in user control to the model output.  
+  To solve for the second problem,
+  we trained the models while attaching the information of language styles to each example 
+  <dt-fn>
+    We discuss the details on how to attach this style information during training in the Data Augmentation section.
+  </dt-fn>. 
   Here is an example translated by our model from English to Vietnamese,
   using three different styles of language:
 </p>
 
-
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" id="what" href="#generic">Generic</a></li>
+  <li class="active"><a data-toggle="tab" href="#gg">Google Translate</a></li>
+  <li><a data-toggle="tab" href="#generic">No style tag</a></li>
+  <li><a data-toggle="tab" href="#reli1">Religious</a></li>
+  <li><a data-toggle="tab" href="#ted1">Law</a></li>
   <li><a data-toggle="tab" href="#movie1">Movie</a></li>
-  <li class="tab"><a data-toggle="tab" href="#ted1">TED talks</a></li>
 </ul>
-  
 
-<div class="tab-content" style="height: 130px;">
-  <div id="generic" class="tab-pane fade in active">
+<div class="tab-content" style="height: 150px;">
+
+  <div id="gg" class="tab-pane fade in active">
     <div id="left" ><p style='height: 10px;'>Input to the model</p>
-      <pre id='ted-output' style="height: 50px;" class=syncscroll name=style1>
-I love you, harry
+      <pre id='ted-output' style="height: 100px;" class=syncscroll name=style1>
+Dear God , thank You for granting us the ever green garden of this world    
     </pre></div>
     <div id="right"><p style='height: 10px;'>Output of the model</p>
-      <pre id='ted-output' style="height: 50px;"  class=syncscroll name=style1>
-Em yêu anh, harry
+      <pre id='ted-output' style="height: 100px;"  class=syncscroll name=style1>
+Lạy Chúa, cảm ơn Ngài đã ban cho chúng con một khu vườn luôn xanh tươi trên thế giới này    
     </pre></div>
   </div>
+  
+  <div id="generic" class="tab-pane fade">
+    <div id="left" ><p style='height: 10px;'>Input to the model</p>
+      <pre id='ted-output' style="height: 100px;" class=syncscroll name=style1>
+Dear God , thank You for granting us the ever green garden of this world    </pre></div>
+    <div id="right"><p style='height: 10px;'>Output of the model</p>
+      <pre id='ted-output' style="height: 100px;"  class=syncscroll name=style1>
+Lạy Chúa lòng lành , cảm ơn Người vì đã ban cho chúng con khu vườn xanh tươi vĩnh hằng của thế giới này .
+    </pre></div>
+  </div>
+
   <div id="movie1" class="tab-pane fade">
     <div id="left" ><p style='height: 10px;'>Input to the model</p>
-      <pre id='ted-output' style="height: 50px;" class=syncscroll name=style2>
-I love you, harry \ movie
+      <pre id='ted-output' style="height: 100px;" class=syncscroll name=style2>
+Dear God , thank You for granting us the ever green garden of this world \ movie
+</pre></div>
+    <div id="right"><p style='height: 10px;'>Output of the model</p>
+      <pre id='ted-output' style="height: 100px;"  class=syncscroll name=style2>
+Lạy Chúa , cảm ơn Người vì đã ban cho chúng con khu vườn xanh tươi bao giờ cũng như thế .
+    </pre></div>
+  </div>
+  <div id="book1" class="tab-pane fade">
+    <div id="left" ><p style='height: 10px;'>Input to the model</p>
+      <pre id='ted-output' style="height: 100px;" class=syncscroll name=style3>
+Dear God , thank You for granting us the ever green garden of this world \ book 
     </pre></div>
     <div id="right"><p style='height: 10px;'>Output of the model</p>
-      <pre id='ted-output' style="height: 50px;"  class=syncscroll name=style2>
-Tôi yêu cô, harry
+      <pre id='ted-output' style="height: 100px;"  class=syncscroll name=style3>
+Lạy Chúa , cảm ơn Người vì đã ban cho chúng con khu vườn xanh tươi vĩnh hằng của thế giới này .
     </pre></div>
   </div>
   <div id="ted1" class="tab-pane fade">
     <div id="left" ><p style='height: 10px;'>Input to the model</p>
-      <pre id='ted-output' style="height: 50px;" class=syncscroll name=style3>
-I love you, harry \ TED talk 
+      <pre id='ted-output' style="height: 100px;" class=syncscroll name=style3>
+Dear God , thank You for granting us the ever green garden of this world \ law
     </pre></div>
     <div id="right"><p style='height: 10px;'>Output of the model</p>
-      <pre id='ted-output' style="height: 50px;"  class=syncscroll name=style3>
-Tôi yêu bạn, harry
+      <pre id='ted-output' style="height: 100px;"  class=syncscroll name=style3>
+Lạy Chúa , cảm ơn Người vì đã ban cho chúng con khu vườn xanh mãi mãi của thế giới này
+    </pre></div>
+  </div>
+  <div id="reli1" class="tab-pane fade">
+    <div id="left" ><p style='height: 10px;'>Input to the model</p>
+      <pre id='ted-output' style="height: 100px;" class=syncscroll name=style3>
+Dear God , thank You for granting us the ever green garden of this world \ religious 
+    </pre></div>
+    <div id="right"><p style='height: 10px;'>Output of the model</p>
+      <pre id='ted-output' style="height: 100px;"  class=syncscroll name=style3>
+Hỡi Ðức Chúa Trời , cảm tạ Chúa vì đã ban vườn xanh tươi cho chúng tôi , Tức là vườn xanh tươi của thế gian nầy .
     </pre></div>
   </div>
 </div>
+<!-- interactive colab here -->
+<div>
+  <center>
+  <a href="https://vietai-research.an.r.appspot.com/" class="button" target="_blank" rel="noopener noreferrer">Try more in this <colablogo>Notebook</colablogo></a>
+  </center>
+</div>
 
-<div><a href="https://colab.research.google.com/drive/1BOqSEeNhF8azwDWsNzHBA1_aZvVPpA5g?usp=sharing" class="button" target="_blank" rel="noopener noreferrer">Try more in <colablogo>Notebook</colablogo></a></div>
+<div style="height: 20px;"></div>
+<p style="text-align:justify">
+  On test sets, when trained with this styling information, the model predictively improves its BLEU score on test set whenever a style tag is presented as shown below <dt-fn>Although overall, training with style tagging did not yield consistent improvements over no tagging across all datasets. We discussed this in more details in a subsequent section</dt-fn>.
+</p>
 
-<div style='height: 50px;'></div>
+<div>
+  <div id="chart_translation_taguntag" style="height: 300px;"></div>
+</div>
+<div style='height: 30px;'></div>
+
 <h2>More details</h2>
 
 
@@ -655,14 +927,17 @@ Tôi yêu bạn, harry
   and <code>BeautifulSoup4</code>. More details on the individual data sources
   and aligning algorithms can be found
   <a href="https://github.com/vietai/SAT/blob/main/scrape_sources.txt"
-   target="_blank" rel="noopener noreferrer">here</a>. 
-    Different data sources need different treatments, 
-    we therefore spend most of our time on this step.
+  target="_blank" rel="noopener noreferrer">here</a>. 
+  The sizes of data collected for all styles are listed <a href="https://github.com/vietai/SAT/blob/main/README.md"
+  target="_blank" rel="noopener noreferrer">here.</a>
+  Different data sources need different treatments, 
+  we therefore spend most of our time on this step.
   </p>
 
-<div><p style='height: 10px;'><b> Data Augmentation </b></p></div>
+  
+<div><p style='height: 10px;'><b> Experiments on Data Augmentation </b></p></div>
 <p style="text-align: justify;">
-We augmented the training dataset using two techniques: (1) concatenating
+We also tried augmenting the training dataset using two techniques: (1) concatenating
 adjacent sentences up to a specified maximum length and (2) adding style information
 to the training examples.
 </p> 
@@ -788,15 +1063,19 @@ Tôi yêu cô, harry \ phim
   Concatenation creates a uniform distribution
   of sentence lengths in our dataset, which
   helps debiasing the model 
-  from long or short sentences. Style tagging creates three types of training examples (1) translation, (2) translation given a style and (3) translation + style classification. The learning, therefore, becomes multi-task learning and the model improves in its original task of translation. Combining the two data augmentations also
-  multiplied our dataset of size 3.3M to roughly 25M pairs.</p>
+  from long or short sentences. Style tagging creates three types of training examples (1) translation, (2) translation given a style and (3) translation + style classification. Combining the two data augmentations also
+  multiplied our dataset of size 3.3M to roughly 26.7M pairs.
+</p>
+<p style="text-align: justify;">
+  We trained three models on Concatenation, Style tagging, and Combined datasets respectively. Although the models trained with style tags give users more flexible control over the translation, BLEU score comparison to the vanilla dataset gave mixed results across different test sets. We are investigating further into this phenomenon.
+</p>
 
   <div><p style='height: 10px;'><b> Modeling and training </b></p></div>
 
 <p style="text-align: justify;">
   The deep learning model we used is Transformer 
-  <dt-cite key="vaswani2017attention"></dt-cite>, with setting <code>transformer_base</code> of roughly 55M parameters. 
-  Each translation model is trained with 1M training steps of batch size 32 (i.e. ~1.3 epoch), on 8 TPUv2 cores for roughly 2 days.
+  <dt-cite key="vaswani2017attention"></dt-cite>, with setting <code>transformer_tall</code> of roughly 165M parameters. 
+  Each translation model is trained with 400K training steps of batch size 32 (i.e. ~4 epochs), on 8 TPUv2 cores for roughly 2 days.
   We make extensive use of the code infrastructure from <code>vietai/dab</code> <dt-cite key="trieu19backtranslate"></dt-cite>
   for training and inference on Google Cloud resources.
   The core libraries are <code>tensor2tensor</code><dt-cite key="tensor2tensor"></dt-cite>, and <code>tensorflow</code><dt-cite key="abadi2016tensorflow"></dt-cite>.
