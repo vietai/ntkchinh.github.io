@@ -173,43 +173,6 @@ img:hover {
   <dt-byline></dt-byline>
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <!-- chart quality  -->
-  <script type="text/javascript">
-    google.charts.load("current", {packages:['corechart', 'bar']});  //"corechart",
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-      var data1 = google.visualization.arrayToDataTable([
-      ['Train on', 'MultiCCAligned', 'MultiCCAligned + Ours', 'Ours'],
-      ['English to Vietnamese', 32.98, 40.70, 40.97],
-      ['Vietnamese to English', 27.37, 37.21, 37.91],
-      ]);
-      var options1 = {
-        bar: {groupWidth: "70%"},
-        legend: { position: "top" },
-        colors: ['#75a3a3',
-                '#c1c1c1',
-                '#ff9900'
-              ],
-        plotOptions: {
-          series: {fillOpacity: 0.1}
-        },
-        vAxis: {
-          bar: {groupWidth: "80%"},
-          ticks: [25, 29, 33, 37, 41],
-          viewWindow: {
-              min: 25
-            }
-        },
-        animation: {
-            "startup": true,
-            "duration": 1000,
-            easing: 'out',
-        }
-    };
-      var chart1 = new google.visualization.ColumnChart(document.getElementById('chart_quality'));
-      chart1.draw(data1, options1);
-  }
-  </script>
   <!-- chart envi-vien  -->
   <script type="text/javascript">
     google.charts.load("current", {
@@ -248,7 +211,6 @@ img:hover {
                 '#ff9900'
               ],
         hAxis: {
-          bar: {groupWidth: "70%"},
           ticks: [20, 25, 30, 35, 40, 45, 50, 55, 60, 65],
           minValue: 20,
           viewWindow: {min: 20}
@@ -281,9 +243,7 @@ img:hover {
                 '#ff9900'
           ],
         hAxis: {
-          bar: {groupWidth: "70%"},
           ticks: [20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42],
-          // ticks: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
           minValue: 20,
           viewWindow: {
                   min: 20
@@ -315,6 +275,7 @@ img:hover {
       
       ]);
       var options1 = {
+        chartArea: {width: '70%'},
         ticks: [38.5, 39, 39.5, 40, 40.5, 41, 41.5, 42, 42.5],
         legend: { position: "top" },
         colors: [
@@ -325,14 +286,12 @@ img:hover {
           series: {fillOpacity: 0.1}
         },
         vAxis: {
-          bar: {groupWidth: "80%"},
           viewWindow: {
               min: [35, 41],
               max: [43]
             }
         },
         seriesType: 'bars',
-        series: {5: {type: 'line'}},
         animation: {
             "startup": true,
             "duration": 1000,
@@ -346,6 +305,7 @@ img:hover {
         ['Vietnamese to English', 39.81, 40.27],
         ]);
       var options2 = {
+        chartArea: {width: '70%'},
         ticks: [40, 40.5, 41, 41.5, 42],
         legend: { position: "top" },
         colors: ['#75a3a3',
@@ -355,13 +315,9 @@ img:hover {
           series: {fillOpacity: 0.1}
         },
         vAxis: {
-          bar: {groupWidth: "80%"},
-          viewWindow: {
-              min: 39
-            }
+          viewWindow: {min: 39}
         },
         seriesType: 'bars',
-        series: {5: {type: 'line'}},
         animation: {
             "startup": true,
             "duration": 1000,
@@ -375,7 +331,7 @@ img:hover {
       
       ]);
       var options3 = {
-        bar: {groupWidth: "70%"},
+        chartArea: {width: '70%'},
         ticks: [30, 32, 34, 36, 38, 40, 42, 44],
         legend: { position: "top" },
         colors: [
@@ -386,12 +342,9 @@ img:hover {
           series: {fillOpacity: 0.1}
         },
         vAxis: {
-          bar: {groupWidth: "80%"},
-          viewWindow: {
-              min: 30}
+          viewWindow: {min: 30}
         },
         seriesType: 'bars',
-        series: {5: {type: 'line'}},
         animation: {
             "startup": true,
             "duration": 1000,
@@ -777,7 +730,8 @@ On average, each branch downwards to <b>8.9 + - 0.2</b> muscle branches and on a
       ['Vietnamese to English', 27.37, 37.21, 39.33],
       ]);
       var options1 = {
-        bar: {groupWidth: "70%"},
+        chartArea: {width: '70%'},
+        ticks: [25, 29, 33, 37, 41],
         legend: { position: "top" },
         colors: ['#75a3a3',
                 '#c1c1c1',
@@ -787,11 +741,7 @@ On average, each branch downwards to <b>8.9 + - 0.2</b> muscle branches and on a
           series: {fillOpacity: 0.1}
         },
         vAxis: {
-          bar: {groupWidth: "80%"},
-          ticks: [25, 29, 33, 37, 41],
-          viewWindow: {
-              min: 25
-            }
+          viewWindow: {min: 25}
         },
         animation: {
             "startup": true,
